@@ -24,10 +24,11 @@ public class JwtTokenValidator extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String  jwt=request.getHeader(JwtConstant.JWT_HEADER);
 
-        //We receive:  Barer jwtToken, so we extract 7 chars just to get jwt
+        //We receive:Bearer jwtToken, so we extract 7 chars just to get jwt
         if(jwt!=null){
             jwt=jwt.substring(7);
             try{
+                //Extract Claims
                 SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
                 Claims claims = Jwts.parserBuilder()
                         .setSigningKey(key)
