@@ -4,15 +4,17 @@ package com.smaran.projectmanagementsystem.controller;
 import com.smaran.projectmanagementsystem.config.JwtProvider;
 import com.smaran.projectmanagementsystem.model.User;
 import com.smaran.projectmanagementsystem.repo.userRepo;
+import com.smaran.projectmanagementsystem.request.LoginRequest;
 import com.smaran.projectmanagementsystem.response.AuthResponse;
 import com.smaran.projectmanagementsystem.service.CustomUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +32,7 @@ public class AuthController {
     private CustomUserDetailsImpl customUserDetails;
 
     @PostMapping("/signup")
-    public ResponseEntity<User> createUserHandler(@RequestBody User user) throws Exception {
+    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception {
         User isUserExist = userRepo.findByEmail(user.getEmail());
         if(isUserExist!=null){
             throw new Exception("email Already exist!");
@@ -47,10 +49,42 @@ public class AuthController {
         String jwt = JwtProvider.generateToken(authentication);
 
         AuthResponse res= new AuthResponse();
-        res.setMessage("Signup Success");
+        res.setMessage("Signup Success!");
         res.setJwt(jwt);
 
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest){
+        String username= loginRequest.getEmail();
+        String password = loginRequest.getPassword();
+
+        Authentication authentication = authenticate(username, password);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String jwt = JwtProvider.generateToken(authentication);
+
+        AuthResponse res= new AuthResponse();
+        res.setMessage("SignIn Success!");
+        res.setJwt(jwt);
+
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
+
+    }
+
+    private Authentication authenticate(String username, String password) {
+        UserDetails userDetails = customUserDetails.loadUserByUsername(username);
+        if(userDetails == null){
+            throw new BadCredentialsException("Invalid username");
+        }
+        if(!passwordEncoder.matches(password, userDetails.getPassword())){
+            throw new BadCredentialsException("Invalid Password");
+        }
+
+        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    }
+
+
 }
+
