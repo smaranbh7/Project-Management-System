@@ -3,7 +3,7 @@ package com.smaran.projectmanagementsystem.controller;
 
 import com.smaran.projectmanagementsystem.config.JwtProvider;
 import com.smaran.projectmanagementsystem.model.User;
-import com.smaran.projectmanagementsystem.repo.userRepo;
+import com.smaran.projectmanagementsystem.repo.UserRepository;
 import com.smaran.projectmanagementsystem.request.LoginRequest;
 import com.smaran.projectmanagementsystem.response.AuthResponse;
 import com.smaran.projectmanagementsystem.service.CustomUserDetailsImpl;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
     @Autowired
-    private userRepo userRepo;
+    private UserRepository UserRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -33,7 +33,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception {
-        User isUserExist = userRepo.findByEmail(user.getEmail());
+        User isUserExist = UserRepository.findByEmail(user.getEmail());
         if(isUserExist!=null){
             throw new Exception("email Already exist!");
         }
@@ -41,7 +41,7 @@ public class AuthController {
         createdUser.setPassword(passwordEncoder.encode(user.getPassword()));
         createdUser.setEmail(user.getEmail());
         createdUser.setFullName(user.getFullName());
-        User savedUser= userRepo.save(createdUser);
+        User savedUser= UserRepository.save(createdUser);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);

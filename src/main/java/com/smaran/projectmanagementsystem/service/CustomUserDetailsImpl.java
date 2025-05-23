@@ -1,7 +1,7 @@
 package com.smaran.projectmanagementsystem.service;
 
 import com.smaran.projectmanagementsystem.model.User;
-import com.smaran.projectmanagementsystem.repo.userRepo;
+import com.smaran.projectmanagementsystem.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,11 +16,11 @@ import java.util.List;
 public class CustomUserDetailsImpl implements UserDetailsService {
 
     @Autowired
-    private userRepo userRepo;
+    private UserRepository UserRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findByEmail(username);
+        User user = UserRepository.findByEmail(username);
         if(user==null){
             throw new UsernameNotFoundException("User not found with email "+ username);
         }
