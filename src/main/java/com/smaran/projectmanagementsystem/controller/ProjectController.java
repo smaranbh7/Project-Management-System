@@ -56,7 +56,6 @@ public class ProjectController {
         return new ResponseEntity<>(createdProject, HttpStatus.OK);
     }
 
-
     @PatchMapping("/{projectId}")
     public ResponseEntity<Project> updateProject(
             @PathVariable Long projectId,
@@ -100,5 +99,16 @@ public class ProjectController {
         Chat projectChat= projectService.getChatByProjectId(projectId);
         return new ResponseEntity<>(projectChat, HttpStatus.OK);
     }
+
+//    @PostMapping("/invite")
+//    public ResponseEntity<MessageResponse> inviteProject(
+//            @RequestHeader("Authorization")String jwt,
+//            @RequestBody Project project
+//
+//    ) throws Exception {
+//        User user =userService.findUserProfileByJwt(jwt);
+//        Project createdProject= projectService.createProject(project, user);
+//        return new ResponseEntity<>(createdProject, HttpStatus.OK);
+//    }
 
 }
