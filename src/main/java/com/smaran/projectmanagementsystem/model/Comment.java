@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -18,7 +18,7 @@ public class Comment {
 
     private String content;
 
-    private LocalDate createdDateTime;
+    private LocalDateTime createdDateTime;
 
     @ManyToOne
     private User user;
