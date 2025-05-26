@@ -7,6 +7,7 @@ import com.smaran.projectmanagementsystem.repo.UserRepository;
 import com.smaran.projectmanagementsystem.request.LoginRequest;
 import com.smaran.projectmanagementsystem.response.AuthResponse;
 import com.smaran.projectmanagementsystem.service.CustomUserDetailsImpl;
+import com.smaran.projectmanagementsystem.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,9 @@ public class AuthController {
     @Autowired
     private CustomUserDetailsImpl customUserDetails;
 
+    @Autowired
+    private SubscriptionService subscriptionService;
+
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception {
         User isUserExist = UserRepository.findByEmail(user.getEmail());
@@ -42,6 +46,9 @@ public class AuthController {
         createdUser.setEmail(user.getEmail());
         createdUser.setFullName(user.getFullName());
         User savedUser= UserRepository.save(createdUser);
+
+        //Creating free subscription plan when user register for the first time
+        subscriptionService.createSubscription(savedUser);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);
