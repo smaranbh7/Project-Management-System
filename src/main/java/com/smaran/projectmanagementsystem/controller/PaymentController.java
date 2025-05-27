@@ -1,12 +1,13 @@
+
 package com.smaran.projectmanagementsystem.controller;
 
 import com.smaran.projectmanagementsystem.model.PlanType;
 import com.smaran.projectmanagementsystem.model.User;
 import com.smaran.projectmanagementsystem.response.PaymentLinkResponse;
 import com.smaran.projectmanagementsystem.service.UserService;
-import com.stripe.Stripe;
-import com.stripe.model.checkout.Session;
-import com.stripe.param.checkout.SessionCreateParams;
+import com.stripe.StripeClient;
+import com.stripe.model.PaymentLink;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/payment")
 public class PaymentController {
+    @Value("${stripe.api.key}")
+    private String apiKey;
 
     @Value("${stripe.api.secret}")
     private String apiSecret;
@@ -27,46 +30,41 @@ public class PaymentController {
     public ResponseEntity<PaymentLinkResponse> createPaymentLink(
             @PathVariable PlanType planType,
             @RequestHeader("Authorization") String jwt
-    ) throws Exception {
-
-        Stripe.apiKey = apiSecret;
-
+    ) throws Exception{
         User user = userService.findUserProfileByJwt(jwt);
-
-        int amount = 5 * 100;
-        if (planType == PlanType.ANNUALLY) {
-            amount *= 12;
-            amount *= 0.7; // 30% off
+        int amount = 5*100;
+        if(planType.equals(PlanType.ANNUALLY)){
+            amount = amount *12;
+            amount = (int)(amount*.7); //30% off
         }
 
-        SessionCreateParams params = SessionCreateParams.builder()
-                .addLineItem(
-                        SessionCreateParams.LineItem.builder()
-                                .setQuantity(1L)
-                                .setPriceData(
-                                        SessionCreateParams.LineItem.PriceData.builder()
-                                                .setCurrency("usd")
-                                                .setUnitAmount((long) amount)
-                                                .setProductData(
-                                                        SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                                                                .setName(planType.name() + " Plan")
-                                                                .build()
-                                                )
-                                                .build()
-                                )
-                                .build()
-                )
-                .setMode(SessionCreateParams.Mode.PAYMENT)
-                .setSuccessUrl("http://localhost:5454/upgrade_plan/success?planType=" + planType)
-                .setCancelUrl("http://localhost:5454/upgrade_plan/cancel")
-                .build();
+        StripeClient stripe = new StripeClient(apiSecret);
+        JSONObject paymentLinkRequest = new JSONObject();
+        paymentLinkRequest.put("amount", amount);
+        paymentLinkRequest.put("currency", "USD");
 
-        Session session = Session.create(params);
+        JSONObject customer = new JSONObject();
+        customer.put("name", user.getFullName());
+        customer.put("email", user.getEmail());
+        paymentLinkRequest.put("customer", customer);
 
-        PaymentLinkResponse response = new PaymentLinkResponse();
-        response.setPayment_link_url(session.getUrl());
-        response.setPayment_link_id(session.getId());
+        JSONObject notify = new JSONObject();
+        notify.put("email", true);
+        paymentLinkRequest.put("notify", notify);
 
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        paymentLinkRequest.put("callback_url", "http://localhost:5454/upgrade_plan/success?planType"+planType);
+
+        PaymentLink payment = stripe.paymentLink.create(paymentLinkRequest);
+
+
+        String paymentLinkId = payment.get("id");
+        String paymentLinkUrl= payment("short_url");
+
+        PaymentLinkResponse res = new PaymentLinkResponse();
+        res.setPayment_link_url(paymentLinkUrl);
+        res.setPayment_link_id(paymentLinkId);
+
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
+
     }
 }
