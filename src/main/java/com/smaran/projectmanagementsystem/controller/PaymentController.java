@@ -1,13 +1,12 @@
-
 package com.smaran.projectmanagementsystem.controller;
 
 import com.smaran.projectmanagementsystem.model.PlanType;
 import com.smaran.projectmanagementsystem.model.User;
 import com.smaran.projectmanagementsystem.response.PaymentLinkResponse;
 import com.smaran.projectmanagementsystem.service.UserService;
-import com.stripe.StripeClient;
+import com.stripe.Stripe;
 import com.stripe.model.PaymentLink;
-import org.json.JSONObject;
+import com.stripe.param.PaymentLinkCreateParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -30,41 +29,42 @@ public class PaymentController {
     public ResponseEntity<PaymentLinkResponse> createPaymentLink(
             @PathVariable PlanType planType,
             @RequestHeader("Authorization") String jwt
-    ) throws Exception{
+    ) throws Exception {
         User user = userService.findUserProfileByJwt(jwt);
-        int amount = 5*100;
-        if(planType.equals(PlanType.ANNUALLY)){
-            amount = amount *12;
-            amount = (int)(amount*.7); //30% off
+        int amount = 5 * 100;
+        if (planType.equals(PlanType.ANNUALLY)) {
+            amount = amount * 12;
+            amount = (int) (amount * .7); // 30% off
         }
 
-        StripeClient stripe = new StripeClient(apiSecret);
-        JSONObject paymentLinkRequest = new JSONObject();
-        paymentLinkRequest.put("amount", amount);
-        paymentLinkRequest.put("currency", "USD");
+        Stripe.apiKey = apiSecret;
 
-        JSONObject customer = new JSONObject();
-        customer.put("name", user.getFullName());
-        customer.put("email", user.getEmail());
-        paymentLinkRequest.put("customer", customer);
+        PaymentLinkCreateParams params = PaymentLinkCreateParams.builder()
+                .addLineItem(
+                        PaymentLinkCreateParams.LineItem.builder()
+                                .setPrice("price_H5ggYwtDq4fbrJ")  // You'll need to create this price in your Stripe dashboard
+                                .setQuantity(1L)
+                                .build()
+                )
+                .setCustomerCreation(PaymentLinkCreateParams.CustomerCreation.ALWAYS)
+                .setAfterCompletion(
+                        PaymentLinkCreateParams.AfterCompletion.builder()
+                                .setType(PaymentLinkCreateParams.AfterCompletion.Type.REDIRECT)
+                                .setRedirect(
+                                        PaymentLinkCreateParams.AfterCompletion.Redirect.builder()
+                                                .setUrl("http://localhost:5454/upgrade_plan/success?planType=" + planType)
+                                                .build()
+                                )
+                                .build()
+                )
+                .build();
 
-        JSONObject notify = new JSONObject();
-        notify.put("email", true);
-        paymentLinkRequest.put("notify", notify);
-
-        paymentLinkRequest.put("callback_url", "http://localhost:5454/upgrade_plan/success?planType"+planType);
-
-        PaymentLink payment = stripe.paymentLink.create(paymentLinkRequest);
-
-
-        String paymentLinkId = payment.get("id");
-        String paymentLinkUrl= payment("short_url");
+        PaymentLink paymentLink = PaymentLink.create(params);
 
         PaymentLinkResponse res = new PaymentLinkResponse();
-        res.setPayment_link_url(paymentLinkUrl);
-        res.setPayment_link_id(paymentLinkId);
+        res.setPayment_link_url(paymentLink.getUrl());
+        res.setPayment_link_id(paymentLink.getId());
 
         return new ResponseEntity<>(res, HttpStatus.CREATED);
-
     }
 }

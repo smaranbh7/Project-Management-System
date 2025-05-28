@@ -1,6 +1,7 @@
 package com.smaran.projectmanagementsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,6 +16,8 @@ public class User {
     private Long id;
     private String fullName;
     private String email;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  //Won't send password to client
     private String password;
 
     @JsonIgnore

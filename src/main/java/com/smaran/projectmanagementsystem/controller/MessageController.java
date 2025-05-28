@@ -26,7 +26,7 @@ public class MessageController {
     @Autowired
     private ProjectService projectService;
 
-    @PostMapping
+    @PostMapping("/send")
     public ResponseEntity<Message> sendMessage(
             @RequestBody CreateMessageRequest request,
             @RequestHeader("Authorization") String jwt
