@@ -1,0 +1,4 @@
+# Ignore application.properties and other sensitive files
+Backend/src/main/resources/application.properties
+Backend/target/classes/application.properties
+# Add other sensitive files or directories as needed 
