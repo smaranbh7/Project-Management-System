@@ -11,7 +11,7 @@ import { Input } from "../../components/ui/input";
 import { useState } from "react";
 import ProjectCard from "../Project/ProjectCard";
 
-const tags = [
+export const tags = [
   "all",
   "react",
   "nextjs",
@@ -101,7 +101,7 @@ function ProjectList() {
 
         <section className="projectListSection w-full lg:w-[48rem]">
           <div className="flex gap-2 items-centerpb-5 justify-between">
-            <div className="relative p-0 w-full">
+            <div className="relative p-0 w-full space-y-5">
               <Input
                 onChange={handleSearchChange}
                 placeholder="Search Project"
