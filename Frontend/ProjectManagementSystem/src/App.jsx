@@ -1,14 +1,18 @@
-import { useState } from 'react'
 import Home from './pages/Home/Home'
 import './App.css'
 import Navbar from './pages/Navbar/Navbar'
+import { Routes, Route } from "react-router-dom"
+import ProjectDetails from './pages/ProjectDetails/ProjectDetails'
 
 function App() {
 
   return (
     <>
-      <Navbar />
-      <Home />
+    <Navbar />
+    <Routes>
+      <Route path="/home" element={<Home/>} />
+      <Route path="/project/:id" element={<ProjectDetails/>}/>
+    </Routes>
     </>
   )
 }

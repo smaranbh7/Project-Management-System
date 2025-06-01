@@ -8,7 +8,7 @@ import {
 } from "../../components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select"
 import { Input } from "../../components/ui/input";
-import { DialogClose } from "@radix-ui/react-dialog";
+import { DialogClose } from "../../components/ui/dialog";
 import { Button } from "../../components/ui/button";
 import { tags } from "../ProjectList/ProjectList";
 import { Cross1Icon } from "@radix-ui/react-icons";
