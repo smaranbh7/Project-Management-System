@@ -5,6 +5,8 @@ import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTrigger } from 
 import { PlusIcon } from "lucide-react"
 import { Button } from "../../components/ui/button"
 import InviteUserForm from "./InviteUserForm"
+import IssueList from "./IssueList"
+import ChatBox from "./ChatBox"
 
 function ProjectDetails() {
     const handleProjectInvitation = () =>{
@@ -62,9 +64,20 @@ function ProjectDetails() {
                         <Badge>Done</Badge>
                     </div>
                 </div>    
+                <section>
+                    <p className="py-5 border-b text-lg tracking-wider">Tasks</p>
+                    <div className="lg:flex md:flex gap-3 justify-between py-5">
+                        <IssueList  status="pending" title="Todo List"/>
+                        <IssueList  status="in_progress" title="In Progress"/>
+                        <IssueList  status="done" title="Done"/>
+                    </div>
+                </section>
                 </div>
                 
             </ScrollArea>
+            <div>
+                <ChatBox />
+            </div>
 
         </div>
 
