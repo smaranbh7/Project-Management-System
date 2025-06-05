@@ -52,6 +52,7 @@ function Subscription() {
                 planName: "Annual Paid Plan",
                 features: annualPlan,
                 planType: "ANNUALLY",
+                price: 64.99,
                 buttonName: true? "Current Plan" : "Get Started"
             }}/>
         </div>
