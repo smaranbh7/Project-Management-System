@@ -5,6 +5,6 @@ import { projectReducer } from "./Project/Reducer";
 
 const rootReducer = combineReducers({
     auth : authReducer,
-    project : projectReducer
+    project : projectReducer,
 });
 export const store= legacy_createStore(rootReducer, applyMiddleware(thunk))
