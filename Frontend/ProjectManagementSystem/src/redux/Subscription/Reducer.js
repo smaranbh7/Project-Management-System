@@ -1,6 +1,6 @@
 import * as actionTypes from './ActionTypes';
 
-initialState = {
+const initialState = {
     userSubscription: null,
     loading: false,
     error: null,
