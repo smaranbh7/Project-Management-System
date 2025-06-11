@@ -72,3 +72,39 @@ export const assignedUserToIssue = ({issueId, userId}) => async (dispatch) => {
         });
     }
 }
+
+export const createIssue = (issueData) => async (dispatch) => {
+    dispatch({ type: ActionTypes.CREATE_ISSUE_REQUEST });
+    try {
+        const response = await api.post('api/issues', issueData);
+        dispatch({
+            type: ActionTypes.CREATE_ISSUE_SUCCESS,
+            issue: response.data,
+        });
+        console.log('Issue created:', response.data);
+    } catch (error) {
+        console.log('Error creating issue:', error);
+        dispatch({
+            type: ActionTypes.CREATE_ISSUE_FAILURE,
+            error: error.message,
+        });
+    }
+}
+
+export const deleteIssue = (issueId) => async (dispatch) => {
+    dispatch({ type: ActionTypes.DELETE_ISSUE_REQUEST });
+    try {
+        await api.delete(`api/issues/${issueId}`);
+        dispatch({
+            type: ActionTypes.DELETE_ISSUE_SUCCESS,
+            issueId,
+        });
+        console.log('Issue deleted:', issueId);
+    } catch (error) {
+        console.log('Error deleting issue:', error);
+        dispatch({
+            type: ActionTypes.DELETE_ISSUE_FAILURE,
+            error: error.message,
+        });
+    }
+}
