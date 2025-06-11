@@ -12,8 +12,11 @@ import { DialogClose } from "../../components/ui/dialog";
 import { Button } from "../../components/ui/button";
 import { tags } from "../ProjectList/ProjectList";
 import { Cross1Icon } from "@radix-ui/react-icons";
-function CreateProjectForm() {
+import { useDispatch } from "react-redux";
+import { createProject } from "../../redux/Project/Action"
 
+function CreateProjectForm() {
+  const dispatch = useDispatch();
   const handleTagsChange =(newValue)=>{
     const currentTags = form.getValues("tags");
     const updatedTags= currentTags.includes(newValue)?
@@ -29,6 +32,7 @@ function CreateProjectForm() {
     },
   });
   const onSubmit = (data) => {
+    dispatch(createProject(data))
     console.log("Create project data", data);
   };
   return (
