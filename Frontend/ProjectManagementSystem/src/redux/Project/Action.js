@@ -9,7 +9,7 @@ import {
     SEARCH_PROJECT_REQUEST, SEARCH_PROJECT_SUCCESS } from "./ActionTypes";
 
 export const fetchProjects=({category, tag})=>async(dispatch) =>{
-    dispatch({ type: FETCH_PROJECTS_REQUEST });
+    dispatch({ type: FETCH_PROJECTS_REQUEST }); 
     try {
         const { data } = await api.get("/api/projects", {params: {category, tag }});
         console.log("All Projects:", data);

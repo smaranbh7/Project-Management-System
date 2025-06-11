@@ -11,7 +11,7 @@ import { Input } from "../../components/ui/input";
 import { useState } from "react";
 import ProjectCard from "../Project/ProjectCard";
 import { useDispatch, useSelector } from "react-redux";
-import { searchProjects } from "../../redux/Project/Action";
+import { fetchProjects, searchProjects } from "../../redux/Project/Action";
 
 export const tags = [
   "all",
@@ -28,8 +28,20 @@ function ProjectList() {
   const [keyword, setKeyword] = useState("");
   const { project } = useSelector(store=>store)
   const dispatch = useDispatch()
-  const handleFilterChange = (section, value) => {
-    console.log("value", value, section);
+  const handleFilterCategory = (value) => {
+    if(value=="all"){
+      dispatch(fetchProjects({}))
+    }else{
+      dispatch(fetchProjects({category:value}));
+    }
+  };
+  const handleFilterTags = (value) => {
+    if(value=="all"){
+       dispatch(fetchProjects({}))
+    }else{
+      dispatch(fetchProjects({tag:value}));
+    }
+
   };
   const handleSearchChange = (e) => {
     setKeyword(e.target.value);
@@ -57,7 +69,7 @@ function ProjectList() {
                       className="space-y-3 pt-5"
                       defaultValue="all"
                       onValueChange={(value) =>
-                        handleFilterChange("category", value)
+                        handleFilterCategory(value)
                       }
                     >
                       <div className="flex items-center gap-2">
@@ -87,7 +99,7 @@ function ProjectList() {
                       className="space-y-3 pt-5"
                       defaultValue="all"
                       onValueChange={(value) =>
-                        handleFilterChange("tag", value)
+                        handleFilterTags(value)
                       }
                     >
                       {tags.map((item) => (
