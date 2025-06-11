@@ -9,9 +9,17 @@ import {
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../components/ui/dropdown-menu";
 import CreateProjectForm from "../Project/CreateProjectForm";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/Auth/Action";
 
 function Navbar() {
+  const { auth } = useSelector(store=>store)
   const navigate= useNavigate();
+  const dispatch = useDispatch()
+
+  const handleLogout=()=>{
+    dispatch(logout())
+  }
   return (
     <div className="border-b py-4 px-5 flex items-center justify-between">
       <div className="flex items-center gap-3">
@@ -35,10 +43,10 @@ function Navbar() {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-                <DropdownMenuItem>Logout</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
-        <p>Smaran Bhattarai</p>
+        <p>{auth.user?.fullName}</p>
 
       </div>
     </div>

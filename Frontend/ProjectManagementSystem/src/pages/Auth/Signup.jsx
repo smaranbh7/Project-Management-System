@@ -2,9 +2,12 @@ import {  useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "../../components/ui/form";
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
+import { useDispatch } from "react-redux"
+import { register } from "../../redux/Auth/Action";
 
 
 function Signup() {
+  const dispatch= useDispatch();
     const form = useForm({
         defaultValues: {
           email: "",
@@ -13,6 +16,7 @@ function Signup() {
         },
       });
       const onSubmit = (data) => {
+        dispatch(register(data));
         console.log("Create project data", data);
       };
   return (
@@ -28,7 +32,7 @@ function Signup() {
                 <FormControl>
                   <Input
                     {...field}
-                    type="email"
+                    type="text"
                     className="border w-full border-gray-700 py-5 px-5"
                     placeholder="FullName"
                   />
@@ -39,7 +43,7 @@ function Signup() {
           />
           <FormField
             control={form.control}
-            name="name"
+            name="email"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -63,7 +67,7 @@ function Signup() {
                 <FormControl>
                   <Input
                     {...field}
-                    type="email"
+                    type="password"
                     className="border w-full border-gray-700 py-5 px-5"
                     placeholder="Password"
                   />
