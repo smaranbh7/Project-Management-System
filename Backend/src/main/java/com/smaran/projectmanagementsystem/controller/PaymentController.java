@@ -31,7 +31,7 @@ public class PaymentController {
             @RequestHeader("Authorization") String jwt
     ) throws Exception {
         User user = userService.findUserProfileByJwt(jwt);
-        int amount = 5 * 100;
+        int amount = 8 * 100;
         if (planType.equals(PlanType.ANNUALLY)) {
             amount = amount * 12;
             amount = (int) (amount * .7); // 30% off
@@ -42,7 +42,7 @@ public class PaymentController {
         PaymentLinkCreateParams params = PaymentLinkCreateParams.builder()
                 .addLineItem(
                         PaymentLinkCreateParams.LineItem.builder()
-                                .setPrice("price_H5ggYwtDq4fbrJ")  // You'll need to create this price in your Stripe dashboard
+                                .setPrice("price_1RZ21eB7as4bwNWXwsIPEjx3")  // You'll need to create this price in your Stripe dashboard
                                 .setQuantity(1L)
                                 .build()
                 )
@@ -52,7 +52,7 @@ public class PaymentController {
                                 .setType(PaymentLinkCreateParams.AfterCompletion.Type.REDIRECT)
                                 .setRedirect(
                                         PaymentLinkCreateParams.AfterCompletion.Redirect.builder()
-                                                .setUrl("http://localhost:5454/upgrade_plan/success?planType=" + planType)
+                                                .setUrl("http://localhost:5453/upgrade_plan/success?planType=" + planType)
                                                 .build()
                                 )
                                 .build()
