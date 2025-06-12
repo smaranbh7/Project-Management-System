@@ -44,7 +44,7 @@ function Subscription() {
                 planName: "Monthly Paid Plan",
                 features: paidPlan,
                 planType: "MONTHLY",
-                price: 7.99,
+                price: 8,
                 buttonName: true? "Current Plan" : "Get Started"
             }}/>
             <SubscriptionCard
@@ -52,7 +52,7 @@ function Subscription() {
                 planName: "Annual Paid Plan",
                 features: annualPlan,
                 planType: "ANNUALLY",
-                price: 64.99,
+                price: 67.20,
                 buttonName: true? "Current Plan" : "Get Started"
             }}/>
         </div>

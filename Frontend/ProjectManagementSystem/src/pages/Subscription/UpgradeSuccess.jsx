@@ -3,9 +3,23 @@ import { Card } from '../../components/ui/card'
 import { CheckCircledIcon } from '@radix-ui/react-icons'
 import { Button } from '../../components/ui/button'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { getUserSubscription, upgradeSubscription } from '../../redux/Subscription/Action';
 
 function UpgradeSuccess() {
     const navigate= useNavigate();
+    const dispatch = useDispatch();
+    const { subscription } = useSelector(store=>store);
+    const queryParams= new URLSearchParams(location.search)
+
+    const paymentId = queryParams.get("payment_id");
+    const planType = queryParams.get("planType");
+
+    useEffect(()=>{
+        dispatch(upgradeSubscription({planType}));
+        dispatch(getUserSubscription());
+    })
   return (
     <div className='flex-justify-center'>
         <Card className="mt-20 p-5 space-y-5 flex flex-col items-center">
