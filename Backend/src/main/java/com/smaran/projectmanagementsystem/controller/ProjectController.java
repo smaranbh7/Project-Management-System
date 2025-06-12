@@ -121,8 +121,7 @@ public class ProjectController {
     @GetMapping("/accept_invitation")
     public ResponseEntity<Invitation> acceptInviteProject(
             @RequestParam String token,
-            @RequestHeader("Authorization")String jwt,
-            @RequestBody Project project
+            @RequestHeader("Authorization")String jwt
 
     ) throws Exception {
         User user =userService.findUserProfileByJwt(jwt);
