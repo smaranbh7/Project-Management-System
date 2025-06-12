@@ -9,14 +9,20 @@ import {
   FormItem,
   FormMessage,
 } from "../../components/ui/form";
+import { useDispatch } from "react-redux";
+import { inviteToProject } from "../../redux/Project/Action";
+import { useParams } from "react-router-dom";
 
 function InviteUserForm() {
+    const dispatch = useDispatch();
+    const { id } = useParams;
     const form = useForm({
         defaultValues: {
           email: "",
         },
       });
       const onSubmit = (data) => {
+        dispatch(inviteToProject({email:data.email, projectId:id}))
         console.log("Create project data", data);
       };
   return (

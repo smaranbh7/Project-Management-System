@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { getUser } from './redux/Auth/Action'
 import { fetchProjects } from './redux/Project/Action'
-import UpgradeSuccess from './pages/Subscription/upgradeSuccess'
+import UpgradeSuccess from './pages/Subscription/UpgradeSuccess'
 
 
 
