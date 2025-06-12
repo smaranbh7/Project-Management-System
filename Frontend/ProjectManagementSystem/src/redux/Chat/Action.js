@@ -9,6 +9,7 @@ export const sendMessage=(messageData)=> async (dispatch) => {
                 type: actionTypes.SEND_MESSAGE_SUCCESS,
                 message: response.data
             });
+            console.log("Message sent successfully:", response.data);
         }catch(error){
             console.error("Error sending message:", error);
             dispatch({

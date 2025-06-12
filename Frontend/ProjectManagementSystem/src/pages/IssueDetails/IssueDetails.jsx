@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ScrollArea } from "../../components/ui/scroll-area";
 import {
@@ -12,27 +12,36 @@ import CommentCard from "./CommentCard";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
 import { Avatar, AvatarFallback } from "../../components/ui/avatar";
 import { Badge } from "../../components/ui/badge";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchIssueById, updateIssueStatus } from "../../redux/Issue/Action";
+import { fetchComments } from "../../redux/Comment/Action";
 
 
 function IssueDetails() {
-    const handleUpdateIssueStatus = (status) =>{
-        console.log(status);
-
-    }
   const { projectId, issueId } = useParams();
+  const dispatch = useDispatch();
+  const {issue, comment} = useSelector(store=>store)
+  const handleUpdateIssueStatus = (status) =>{
+    dispatch(updateIssueStatus({id:issueId,status}))
+        console.log(status);
+    }
+  useEffect(()=>{
+      dispatch(fetchIssueById(issueId));
+      dispatch(fetchComments(issueId));
+  },[issueId])
   return (
     <div className="px-20 py-8 text-gray-400">
       <div className="flex justify-between border p-10 rounded-lg">
         <ScrollArea>
           <div className="h-[80vh] w-[60%]">
             <h1 className="text-lg font-semibold text-gray-400">
-              Create navbar
+              {issue.issueDetails?.title}
             </h1>
 
             <div className="py-5">
               <h2 className="font-semibold text-gray-400">Description</h2>
               <p className="text-gray-400 text-sm mt-3 ">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                {issue.issueDetails?.description}
               </p>
             </div>
             <div className="mt-5">
@@ -52,8 +61,8 @@ function IssueDetails() {
                 <TabsContent value="comments">
                   <CreateCommentForm issueId={issueId} />
                   <div className="mt-8 space-y-6">
-                    {[1, 1, 1, 1].map((item) => (
-                      <CommentCard key={item} />
+                    {comment.comments.map((item) => (
+                      <CommentCard item={item} key={item} />
                     ))}
                   </div>
                 </TabsContent>
@@ -68,7 +77,7 @@ function IssueDetails() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="pending">To DO</SelectItem>
-              <SelectItem value="dain_progressrk">In Progress</SelectItem>
+              <SelectItem value="in_progress">In Progress</SelectItem>
               <SelectItem value="done">Done</SelectItem>
             </SelectContent>
           </Select>
@@ -79,6 +88,7 @@ function IssueDetails() {
                 <div className="space-y-7">
                     <div className="flex gap-10 items-center">
                         <p className="w-[7rem]">Assignee</p>
+                        {issue.issueDetails?.assignee?.fullName? 
                         <div className="flex items-center gap-3">
                             <Avatar className="h-8 w-8 text-xs">
                                 <AvatarFallback>
@@ -86,8 +96,8 @@ function IssueDetails() {
                                 </AvatarFallback>
                             </Avatar>
                             <p>Smaran</p>
-                        </div>
-
+                        </div>:<p>Unassigned</p>
+                        }
                     </div>
                     <div className="flex gap-10 items-center">
                         <p className="w-[7rem]">Lables</p>
@@ -95,7 +105,7 @@ function IssueDetails() {
                     </div>
                      <div className="flex gap-10 items-center">
                         <p className="w-[7rem]">Status</p>
-                        <Badge>in_progress</Badge>
+                        <Badge>{issue.issueDetails?.status}</Badge>
                     </div>
                      <div className="flex gap-10 items-center">
                         <p className="w-[7rem]">Release</p>

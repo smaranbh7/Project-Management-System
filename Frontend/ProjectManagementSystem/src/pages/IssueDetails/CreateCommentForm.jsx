@@ -4,14 +4,18 @@ import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
 import { Avatar, AvatarFallback } from "../../components/ui/avatar";
 import { SaveIcon } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { createComment } from "../../redux/Comment/Action";
 
 function CreateCommentForm({issueId}) {
+    const dispatch= useDispatch()
     const form = useForm({
         defaultValues: {
           content: "",
         },
       });
       const onSubmit = (data) =>{
+        dispatch(createComment({content:data.content, issueId}))
         console.log("Create project data ", data)
       }
 

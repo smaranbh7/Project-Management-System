@@ -19,7 +19,7 @@ export const createComment = (commentData) =>async(dispatch) => {
     }
 }
 
-const deleteComment = (commentId) => async (dispatch) => {
+export const deleteComment = (commentId) => async (dispatch) => {
     dispatch({ type: actionTypes.DELETE_COMMENT_REQUEST });
     try {
         const response = await api.delete(`api/comments/${commentId}`); 
