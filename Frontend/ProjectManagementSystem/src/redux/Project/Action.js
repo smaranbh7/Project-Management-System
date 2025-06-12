@@ -73,15 +73,15 @@ export const inviteToProject=({email, projectId})=>async(dispatch) =>{
         console.error("Error inviting to project:", error);
     }
 }
-export const acceptInvitation=({invitationToken, navigate})=>async(dispatch) =>{
+export const acceptInvitation=({token, navigate})=>async(dispatch) =>{
     dispatch({ type: ACCEPT_INVITATION_REQUEST });
     try {
         const { data } = await api.get("/api/projects/accept_invitation", {
              params: { 
-                token: invitationToken 
+                token 
             } 
         });
-        navigate("/project"+data.projectId)
+        navigate("/project/"+data.projectId)
         console.log("Invitation accepted:", data);
         dispatch({ type: ACCEPT_INVITATION_SUCCESS, payload: data });
     } catch (error) {
