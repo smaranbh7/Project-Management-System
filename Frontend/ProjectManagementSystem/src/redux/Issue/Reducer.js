@@ -4,7 +4,7 @@ const initialState = {
     issues: [],
     loading: false,
     error: null,
-    issueDetails: null,
+    issueDetails: null,   
 };
 
 export const issueReducer = (state = initialState, action) => {

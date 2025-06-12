@@ -77,7 +77,7 @@ function ProjectDetails() {
                 <section>
                     <p className="py-5 border-b text-lg tracking-wider">Tasks</p>
                     <div className="lg:flex md:flex gap-3 justify-between py-5">
-                        <IssueList  status="pending" title="Todo List"/>
+                        <IssueList  status="pending" title="Pending"/>
                         <IssueList  status="in_progress" title="In Progress"/>
                         <IssueList  status="done" title="Done"/>
                     </div>

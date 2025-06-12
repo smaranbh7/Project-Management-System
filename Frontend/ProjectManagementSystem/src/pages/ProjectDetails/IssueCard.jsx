@@ -7,7 +7,7 @@ import { AvatarFallback } from "../../components/ui/avatar"
 import UserList from "./UserList"
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { deleteIssue } from "../../redux/Issue/Action"
+import { deleteIssue, updateIssueStatus } from "../../redux/Issue/Action"
 
 
 function IssueCard({item, projectId}) {
@@ -30,9 +30,6 @@ function IssueCard({item, projectId}) {
                       </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DropdownMenuItem>In Progress</DropdownMenuItem>
-                    <DropdownMenuItem>Done</DropdownMenuItem>
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
                     <DropdownMenuItem onClick={handleIssueDelete}>Delete</DropdownMenuItem>
                   </DropdownMenuContent>
               </DropdownMenu>
