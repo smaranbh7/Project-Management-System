@@ -39,7 +39,15 @@ export const fetchChatByProject = (projectId) => async (dispatch) => {
 export const fetchChatMessages = (chatId) => async (dispatch) => {
     dispatch({ type: actionTypes.FETCH_CHAT_MESSAGES_REQUEST });
     try {
-        const response = await api.get(`/api/messages/chat/${chatId}`);
+        const token = localStorage.getItem('token');
+        if (!chatId) {
+            throw new Error('Chat ID is required');
+        }
+        const response = await api.get(`/api/messages/chat/${chatId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
         console.log("Chat Messages:", response.data);
         dispatch({
             type: actionTypes.FETCH_CHAT_MESSAGES_SUCCESS,

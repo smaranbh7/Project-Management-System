@@ -76,7 +76,7 @@ function IssueDetails() {
               <SelectValue placeholder="To Do" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="pending">To DO</SelectItem>
+              <SelectItem value="pending">Pending</SelectItem>
               <SelectItem value="in_progress">In Progress</SelectItem>
               <SelectItem value="done">Done</SelectItem>
             </SelectContent>
@@ -92,16 +92,12 @@ function IssueDetails() {
                         <div className="flex items-center gap-3">
                             <Avatar className="h-8 w-8 text-xs">
                                 <AvatarFallback>
-                                    s
+                                    {issue.issueDetails?.assignee?.fullName[0]}
                                 </AvatarFallback>
                             </Avatar>
-                            <p>Smaran</p>
+                            <p>{issue.issueDetails?.assignee?.fullName}</p>
                         </div>:<p>Unassigned</p>
                         }
-                    </div>
-                    <div className="flex gap-10 items-center">
-                        <p className="w-[7rem]">Lables</p>
-                        <p>None</p>
                     </div>
                      <div className="flex gap-10 items-center">
                         <p className="w-[7rem]">Status</p>
@@ -111,22 +107,7 @@ function IssueDetails() {
                         <p className="w-[7rem]">Release</p>
                         <p>10-10-2015</p>
                     </div>
-                      <div className="flex gap-10 items-center">
-                        <p className="w-[7rem]">Reporter</p>
-                        <div className="flex items-center gap-3">
-                            <Avatar className="h-8 w-8 text-xs">
-                                <AvatarFallback>
-                                    R
-                                </AvatarFallback>
-                            </Avatar>
-                            <p>Smaran</p>
-                        </div>
-
-                    </div>
-                    
-                    
-
-                </div>
+                  </div>
 
             </div>
 

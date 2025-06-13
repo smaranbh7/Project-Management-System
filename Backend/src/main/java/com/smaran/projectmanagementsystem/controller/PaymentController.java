@@ -25,46 +25,62 @@ public class PaymentController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/test")
+    public ResponseEntity<String> testEndpoint() {
+        return ResponseEntity.ok("Payment controller is working!");
+    }
+
     @PostMapping("/{planType}")
     public ResponseEntity<PaymentLinkResponse> createPaymentLink(
             @PathVariable PlanType planType,
             @RequestHeader("Authorization") String jwt
     ) throws Exception {
-        User user = userService.findUserProfileByJwt(jwt);
-        int amount = 5 * 100;
-        if (planType.equals(PlanType.ANNUALLY)) {
-            amount = amount * 12;
-            amount = (int) (amount * .7); // 30% off
+        try {
+            User user = userService.findUserProfileByJwt(jwt);
+
+            // Use the correct price ID for each plan
+            String priceId;
+            if (planType.equals(PlanType.ANNUALLY)) {
+                priceId = "price_1RZ23kB7as4bwNWXtx7Q6rzw"; // annual
+            } else if (planType.equals(PlanType.MONTHLY)) {
+                priceId = "price_1RZ21eB7as4bwNWXwsIPEjx3"; // monthly
+            } else {
+                throw new Exception("Invalid plan type: " + planType);
+            }
+
+            Stripe.apiKey = apiSecret;
+
+            PaymentLinkCreateParams params = PaymentLinkCreateParams.builder()
+                    .addLineItem(
+                            PaymentLinkCreateParams.LineItem.builder()
+                                    .setPrice(priceId)
+                                    .setQuantity(1L)
+                                    .build()
+                    )
+                    .putMetadata("userId", user.getId().toString())
+                    .putMetadata("userEmail", user.getEmail())
+                    .putMetadata("planType", planType.toString())
+                    .setAfterCompletion(
+                            PaymentLinkCreateParams.AfterCompletion.builder()
+                                    .setType(PaymentLinkCreateParams.AfterCompletion.Type.REDIRECT)
+                                    .setRedirect(
+                                            PaymentLinkCreateParams.AfterCompletion.Redirect.builder()
+                                                    .setUrl("http://localhost:5173/upgrade_plan/success?planType=" + planType + "&userId=" + user.getId())
+                                                    .build()
+                                    )
+                                    .build()
+                    )
+                    .build();
+
+            PaymentLink paymentLink = PaymentLink.create(params);
+
+            PaymentLinkResponse res = new PaymentLinkResponse();
+            res.setPayment_link_url(paymentLink.getUrl());
+            res.setPayment_link_id(paymentLink.getId());
+
+            return new ResponseEntity<>(res, HttpStatus.CREATED);
+        } catch (Exception e) {
+            throw new Exception("Failed to create payment link: " + e.getMessage());
         }
-
-        Stripe.apiKey = apiSecret;
-
-        PaymentLinkCreateParams params = PaymentLinkCreateParams.builder()
-                .addLineItem(
-                        PaymentLinkCreateParams.LineItem.builder()
-                                .setPrice("price_H5ggYwtDq4fbrJ")  // You'll need to create this price in your Stripe dashboard
-                                .setQuantity(1L)
-                                .build()
-                )
-                .setCustomerCreation(PaymentLinkCreateParams.CustomerCreation.ALWAYS)
-                .setAfterCompletion(
-                        PaymentLinkCreateParams.AfterCompletion.builder()
-                                .setType(PaymentLinkCreateParams.AfterCompletion.Type.REDIRECT)
-                                .setRedirect(
-                                        PaymentLinkCreateParams.AfterCompletion.Redirect.builder()
-                                                .setUrl("http://localhost:5454/upgrade_plan/success?planType=" + planType)
-                                                .build()
-                                )
-                                .build()
-                )
-                .build();
-
-        PaymentLink paymentLink = PaymentLink.create(params);
-
-        PaymentLinkResponse res = new PaymentLinkResponse();
-        res.setPayment_link_url(paymentLink.getUrl());
-        res.setPayment_link_id(paymentLink.getId());
-
-        return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 }

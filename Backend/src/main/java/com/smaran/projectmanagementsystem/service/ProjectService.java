@@ -14,7 +14,7 @@ public interface ProjectService {
 
     Project getProjectById(Long projectId) throws Exception;
 
-    void deleteProject(Long projectId, Long UserId) throws Exception;
+    void deleteProject(Long projectId, User user) throws Exception;
 
     Project updateProject(Project upadtedProject, Long projectId) throws Exception;
 

@@ -6,6 +6,7 @@ const initialState = {
     error: null,
     projectDetails: null,
     searchProjects: [],
+    projectSize:0,
 };
 
 export const projectReducer =(state=initialState, action)=>{

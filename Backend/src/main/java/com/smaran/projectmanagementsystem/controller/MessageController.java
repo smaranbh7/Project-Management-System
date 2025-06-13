@@ -41,11 +41,13 @@ public class MessageController {
         return ResponseEntity.ok(sendMessage);
     }
 
-    @GetMapping("/chat/{projectId}")
+    @GetMapping("/chat/{chatId}")
     public ResponseEntity<List<Message>> getMessagesByChatId(
-            @PathVariable Long projectId
-    ) throws Exception{
-        List<Message> messages = messageService.getMessageByProjectId(projectId);
+            @PathVariable Long chatId,
+            @RequestHeader("Authorization") String jwt
+    ) throws Exception {
+        User user = userService.findUserProfileByJwt(jwt);
+        List<Message> messages = messageService.getMessageByChatId(chatId);
         return ResponseEntity.ok(messages);
     }
 }

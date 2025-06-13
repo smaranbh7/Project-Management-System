@@ -79,7 +79,7 @@ public class ProjectController {
             @RequestHeader("Authorization") String jwt
     ) throws Exception {
         User user = userService.findUserProfileByJwt(jwt);
-        projectService.deleteProject(projectId, user.getId());
+        projectService.deleteProject(projectId, user);
         MessageResponse res = new MessageResponse("Project deleted successfully!");
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
@@ -109,8 +109,7 @@ public class ProjectController {
     @PostMapping("/invite")
     public ResponseEntity<MessageResponse> inviteProject(
             @RequestBody InviteRequest req,
-            @RequestHeader("Authorization")String jwt,
-            @RequestBody Project project
+            @RequestHeader("Authorization")String jwt
 
     ) throws Exception {
         User user =userService.findUserProfileByJwt(jwt);
@@ -122,8 +121,7 @@ public class ProjectController {
     @GetMapping("/accept_invitation")
     public ResponseEntity<Invitation> acceptInviteProject(
             @RequestParam String token,
-            @RequestHeader("Authorization")String jwt,
-            @RequestBody Project project
+            @RequestHeader("Authorization")String jwt
 
     ) throws Exception {
         User user =userService.findUserProfileByJwt(jwt);

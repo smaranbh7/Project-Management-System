@@ -5,7 +5,6 @@ const initialState = {
     loading:false,
     error:null,
     jwt:null,
-    projectSize:0,
 }
 
 export const authReducer =(state=initialState, action)=>{

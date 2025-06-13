@@ -9,15 +9,25 @@ import {
   FormItem,
   FormMessage,
 } from "../../components/ui/form";
+import { useDispatch } from "react-redux";
+import { inviteToProject } from "../../redux/Project/Action";
+import { useParams } from "react-router-dom";
 
 function InviteUserForm() {
+    const dispatch = useDispatch();
+    const { id } = useParams();
     const form = useForm({
         defaultValues: {
           email: "",
         },
       });
       const onSubmit = (data) => {
-        console.log("Create project data", data);
+        if (!data.email || !data.email.trim()) {
+          alert("Please enter a valid email address");
+          return;
+        }
+        dispatch(inviteToProject({email: data.email.trim(), projectId: id}))
+        console.log("Sending invitation to:", data.email);
       };
   return (
     <div>
@@ -25,7 +35,14 @@ function InviteUserForm() {
         <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             control={form.control}
-            name="name"
+            name="email"
+            rules={{
+              required: "Email is required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Please enter a valid email address"
+              }
+            }}
             render={({ field }) => (
               <FormItem>
                 <FormControl>

@@ -1,12 +1,10 @@
 import * as actionTypes from './ActionTypes';
 import api from '../../config/api';
 
-export const getUserSubscription = (jwt) => async (dispatch) => {
+export const getUserSubscription = () => async (dispatch) => {
     dispatch({ type: actionTypes.GET_USER_SUBSCRIPTION_REQUEST });
     try {
-        const response = await api.get('api/subscriptions/user', {
-            headers: { Authorization: `Bearer ${jwt}` }
-        });
+        const response = await api.get('/api/subscription/user');
         dispatch({
             type: actionTypes.GET_USER_SUBSCRIPTION_SUCCESS,
             payload: response.data,
@@ -16,7 +14,7 @@ export const getUserSubscription = (jwt) => async (dispatch) => {
         console.log('Error fetching user subscription:', error);
         dispatch({
             type: actionTypes.GET_USER_SUBSCRIPTION_FAILURE,
-            payload: error.message,
+            payload: error.response?.data?.message || error.message,
         });
     }
 }
@@ -24,10 +22,10 @@ export const getUserSubscription = (jwt) => async (dispatch) => {
 export const upgradeSubscription = ({planType}) => async (dispatch) => {
     dispatch({ type: actionTypes.UPGRADE_SUBSCRIPTION_REQUEST });
     try {
-        const response = await api.patch('api/subscriptions/upgrade',null,  { 
-            params : {
+        const response = await api.patch('/api/subscription/upgrade', null, { 
+            params: {
                 planType: planType,
-             },
+            },
         });
         dispatch({
             type: actionTypes.UPGRADE_SUBSCRIPTION_SUCCESS,
@@ -38,7 +36,7 @@ export const upgradeSubscription = ({planType}) => async (dispatch) => {
         console.log('Error upgrading subscription:', error);
         dispatch({
             type: actionTypes.UPGRADE_SUBSCRIPTION_FAILURE,
-            payload: error.message,
+            payload: error.response?.data?.message || error.message,
         });
     }
 }

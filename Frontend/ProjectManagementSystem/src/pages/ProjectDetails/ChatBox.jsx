@@ -16,10 +16,23 @@ function ChatBox() {
 
     useEffect(()=>{
       dispatch(fetchChatByProject(id))
-    },[])
+    },[id])
+
     useEffect(()=>{
-      dispatch(fetchChatMessages(chat.chat?.id))
-    },[])
+      if (chat.chat?.id) {
+        dispatch(fetchChatMessages(chat.chat.id))
+      }
+    },[chat.chat?.id])
+
+    // Poll for new messages every 5 seconds
+    useEffect(() => {
+      if (chat.chat?.id) {
+        const interval = setInterval(() => {
+          dispatch(fetchChatMessages(chat.chat.id))
+        }, 5000)
+        return () => clearInterval(interval)
+      }
+    }, [chat.chat?.id])
 
     const handleSendMessage = () => {
       dispatch(sendMessage({
