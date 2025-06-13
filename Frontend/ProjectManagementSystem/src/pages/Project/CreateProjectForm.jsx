@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 import { createProject } from "../../redux/Project/Action"
 
 function CreateProjectForm() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const handleTagsChange =(newValue)=>{
     const currentTags = form.getValues("tags");
     const updatedTags= currentTags.includes(newValue)?

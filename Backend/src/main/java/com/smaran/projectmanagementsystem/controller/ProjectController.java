@@ -79,7 +79,7 @@ public class ProjectController {
             @RequestHeader("Authorization") String jwt
     ) throws Exception {
         User user = userService.findUserProfileByJwt(jwt);
-        projectService.deleteProject(projectId, user.getId());
+        projectService.deleteProject(projectId, user);
         MessageResponse res = new MessageResponse("Project deleted successfully!");
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

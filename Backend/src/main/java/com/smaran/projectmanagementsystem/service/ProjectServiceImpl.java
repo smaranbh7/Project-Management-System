@@ -1,8 +1,6 @@
 package com.smaran.projectmanagementsystem.service;
 
-import com.smaran.projectmanagementsystem.model.Chat;
-import com.smaran.projectmanagementsystem.model.Project;
-import com.smaran.projectmanagementsystem.model.User;
+import com.smaran.projectmanagementsystem.model.*;
 import com.smaran.projectmanagementsystem.repo.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,26 +21,36 @@ public class ProjectServiceImpl implements ProjectService{
     @Autowired
     private ChatService chatService;
 
+    @Autowired
+    private SubscriptionService subscriptionService;
+
     @Override
     public Project createProject(Project project, User user) throws Exception {
+        Subscription subscription = subscriptionService.getUsersSubscription(user.getId());
         Project createdProject = new Project();
 
-        createdProject.setOwner(user);
-        createdProject.setTags(project.getTags());
-        createdProject.setName(project.getName());
-        createdProject.setCategory(project.getCategory());
-        createdProject.setDescription(project.getDescription());
-        createdProject.getTeam().add(user);
+        if(subscription.getPlanType() == PlanType.FREE && user.getProjectSize() >= 3){
+            throw new Exception("Free plan allows only 3 projects. Please upgrade to create more.");
+        }else{
+            createdProject.setOwner(user);
+            createdProject.setTags(project.getTags());
+            createdProject.setName(project.getName());
+            createdProject.setCategory(project.getCategory());
+            createdProject.setDescription(project.getDescription());
+            createdProject.getTeam().add(user);
+            userService.updateUsersProjectSize(user, 1);
 
-        Project savedProject = projectRepository.save(createdProject);
+            Project savedProject = projectRepository.save(createdProject);
 
-        Chat chat = new Chat();
-        chat.setProject(savedProject);  //link project to chat
+            Chat chat = new Chat();
+            chat.setProject(savedProject);  //link project to chat
 
-        Chat projectChat = chatService.createChat(chat);
-        savedProject.setChat(projectChat);  //link chat to project
+            Chat projectChat = chatService.createChat(chat);
+            savedProject.setChat(projectChat);  //link chat to project
 
-        return savedProject;
+            return savedProject;
+        }
+
     }
 
     @Override
@@ -77,9 +85,10 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public void deleteProject(Long projectId, Long UserId) throws Exception {
+    public void deleteProject(Long projectId, User user) throws Exception {
         getProjectById(projectId);
         projectRepository.deleteById(projectId);
+        userService.updateUsersProjectSize(user,-1);
     }
 
     @Override
