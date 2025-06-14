@@ -129,7 +129,7 @@ function ProjectList() {
           </div>
           <div className="space-y-5 min-h-[74vh]">
             {keyword
-              ? project.searchProjects?.map((item, index) => <ProjectCard item={item} key={item.id*index}/>)
+              ? project.searchProjects?.map((item) => <ProjectCard item={item} key={item.id}/>)
               : project.projects?.map((item) => <ProjectCard key={item.id} item={item}/>)}
           </div>
         </section>

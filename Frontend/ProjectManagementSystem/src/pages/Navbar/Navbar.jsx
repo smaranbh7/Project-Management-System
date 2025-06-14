@@ -25,7 +25,7 @@ function Navbar() {
       <div className="flex items-center gap-3">
         <p onClick={()=>navigate("/")} className="cursor-pointer">Project Management System</p>
         <Dialog>
-          <DialogTrigger>
+          <DialogTrigger asChild>
             <Button variant="ghost">New Project</Button>
           </DialogTrigger>
           <DialogContent>
@@ -37,7 +37,7 @@ function Navbar() {
       </div>
       <div className="flex gap-3 items-center">
         <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
                 <Button variant='outline' size="icon" className="rounded-full border-2 border-gray-500">
                     <PersonIcon />
                 </Button>
