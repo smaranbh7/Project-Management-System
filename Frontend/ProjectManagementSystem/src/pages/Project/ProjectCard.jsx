@@ -33,7 +33,7 @@ function ProjectCard({item}) {
             </div>
             <div>
               <DropdownMenu>
-                <DropdownMenuTrigger>
+                <DropdownMenuTrigger asChild>
                   <Button className="rounded-full" variant="ghost" size="icon">
                     <DotsVerticalIcon />
                   </Button>
@@ -50,7 +50,7 @@ function ProjectCard({item}) {
             </p>
         </div>
         <div className="flex flex-wrap gap-2 items-center">
-            {item.tags.map((tag)=><Badge key={item} variant="outline">{tag}</Badge>)}
+            {item.tags.map((tag)=><Badge key={tag.id} variant="outline">{tag}</Badge>)}
 
         </div>
       </div>
