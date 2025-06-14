@@ -16,47 +16,59 @@ function IssueCard({item, projectId}) {
     const handleIssueDelete=()=>{
         dispatch(deleteIssue(item.id))
     }
+    
   return (
-    <Card className="rounded-md py-1 pb-2">
-      <CardHeader className="py-0 pb-1">
-          <div className="flex justify-between items-center">     
-              <CardTitle className="cursor-pointer" onClick={()=>navigate(`/project/${projectId}/issue/${item.id}`)}>
-                  {item.title}
-              </CardTitle>
-              <DropdownMenu>
-                  <DropdownMenuTrigger>
-                      <Button className="rounded-full" size="icon" variant="ghost">
-                          <DotsVerticalIcon />
-                      </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem onClick={handleIssueDelete}>Delete</DropdownMenuItem>
-                  </DropdownMenuContent>
-              </DropdownMenu>
-          </div>
-      </CardHeader>
-      <CardContent className="py-0">
-        <div className="flex items-center justify-between">
-            <p>FBP - {1}</p>
-            <DropdownMenu className="w-[30rem] border border-red-400">
-                <DropdownMenuTrigger>
-                    <Button size="icon" className="bg-gray-900 hover:text-black text-white rounded-full">
-                        <Avatar>
-                            <AvatarFallback>
-                                <PersonIcon />
-                            </AvatarFallback>
-                        </Avatar>
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                    <UserList issueDetails={item}/>
-                  </DropdownMenuContent>
-
-            </DropdownMenu>
-
-        </div>
-      </CardContent>
-    </Card>
+    <div className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-4 hover:bg-white/10 hover:border-white/20 transition-all duration-200">
+      {/* Header */}
+      <div className="flex items-start justify-between mb-3">
+        <h4 
+          className="text-white font-medium cursor-pointer hover:text-blue-400 transition-colors line-clamp-2 flex-1 mr-2" 
+          onClick={()=>navigate(`/project/${projectId}/issue/${item.id}`)}
+        >
+          {item.title}
+        </h4>
+        
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="opacity-0 group-hover:opacity-100 p-1.5 hover:bg-white/10 rounded transition-all duration-200">
+              <DotsVerticalIcon className="w-4 h-4 text-slate-400 hover:text-white" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="bg-slate-800 border-slate-700">
+            <DropdownMenuItem 
+              onClick={handleIssueDelete}
+              className="text-red-400 hover:bg-red-900/20 hover:text-red-300"
+            >
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+      
+      {/* Footer */}
+      <div className="flex items-center justify-between">
+        <span className="text-xs text-slate-400 font-mono">
+          #{item.id}
+        </span>
+        
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="flex items-center justify-center w-7 h-7 bg-slate-700/50 hover:bg-slate-600/50 rounded-full transition-colors">
+              {item.assignee ? (
+                <span className="text-xs font-medium text-white">
+                  {item.assignee.fullName[0]}
+                </span>
+              ) : (
+                <PersonIcon className="w-3 h-3 text-slate-400" />
+              )}
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-slate-800 border-slate-700">
+            <UserList issueDetails={item}/>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    </div>
   )
 }
 

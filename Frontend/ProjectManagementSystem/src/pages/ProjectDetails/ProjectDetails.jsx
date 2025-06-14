@@ -23,77 +23,97 @@ function ProjectDetails() {
     dispatch(fetchProjectById(id))
   },[id])
   return (
-    <>
-    <div className="mt-5 lg:px-10">
-        <div className="lg:flex gap-5 justify-between pb-4">
-            <ScrollArea className="h-screen lg:w-[69%] pr-2">
-                <div className="text-gray-400 pb-10 w-full">
-                    <h1 className="text-lg font-semibold pb-5">
-                        {project.projectDetails?.name}
-                        </h1>
-                    <div className="space-y-5 pb-10 text-sm">
-                    <p className="w-full md:max-w-lg lg:max-w-xl ">
-                        {project.projectDetails?.description}
-                    </p>
-                    <div className="flex">
-                        <p className="w-36">Project Lead :</p>
-                        <p>{project.projectDetails?.owner.fullName}</p>
-                    </div>
-                    <div className="flex">
-                        <p className="w-36">Members : </p>
-                        <div className="flex items-center gap-2">
-                            {project.projectDetails?.team.map((item) =><Avatar className="cursor-pointer"  key={item}>
-                                <AvatarFallback>
-                                    {item.fullName[0]}
-                                </AvatarFallback>
-                            </Avatar>)}
-
-                        </div>
-                        <Dialog>
-                            <DialogTrigger>
-                                <DialogClose>
-                                    <Button size="sm" variant="outline" onClick={handleProjectInvitation} className="ml-2">
-                                        <span>Invite</span>
-                                        <PlusIcon className="w-3 h-3"/>
-                                    </Button>
-                                </DialogClose>
-                            </DialogTrigger>
-                            <DialogContent>
-                                <DialogHeader>Invite User</DialogHeader>
-                                <InviteUserForm/>
-                            </DialogContent>
-                        </Dialog>
-                        
-                    </div>
-                    <div className="flex">
-                        <p className="w-36">Category :</p>
-                        <p>{project.projectDetails?.category}</p>
-                    </div>
-                     <div className="flex">
-                        <p className="w-36">Status :</p>
-                        <Badge>Done</Badge>
-                    </div>
-                </div>    
-                <section>
-                    <p className="py-5 border-b text-lg tracking-wider">Tasks</p>
-                    <div className="lg:flex md:flex gap-3 justify-between py-5">
-                        <IssueList  status="pending" title="Pending"/>
-                        <IssueList  status="in_progress" title="In Progress"/>
-                        <IssueList  status="done" title="Done"/>
-                    </div>
-                </section>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 relative">
+      {/* Subtle Grid Pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(148,163,184,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.03)_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      
+      {/* Subtle Accent */}
+      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-blue-900/20 to-transparent"></div>
+      
+      <div className="container mx-auto px-6 py-8 relative z-10">
+        <div className="lg:flex gap-8">
+          {/* Main Content */}
+          <main className="flex-1 space-y-6">
+            {/* Project Header */}
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-8">
+              <h1 className="text-3xl font-bold text-white mb-6">
+                {project.projectDetails?.name}
+              </h1>
+              
+              <p className="text-slate-300 mb-8 text-lg leading-relaxed">
+                {project.projectDetails?.description}
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="text-sm font-semibold text-slate-400 mb-3 uppercase tracking-wider">Project Lead</h3>
+                  <p className="text-white text-lg">{project.projectDetails?.owner.fullName}</p>
                 </div>
                 
-            </ScrollArea>
-            <div className="lg:w-[30%] rounded-md sticky right-5 top-10">
-                <ChatBox/>
+                <div>
+                  <h3 className="text-sm font-semibold text-slate-400 mb-3 uppercase tracking-wider">Category</h3>
+                  <span className="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                    {project.projectDetails?.category}
+                  </span>
+                </div>
+                
+                <div>
+                  <h3 className="text-sm font-semibold text-slate-400 mb-3 uppercase tracking-wider">Team Members</h3>
+                  <div className="flex items-center gap-4">
+                    <div className="flex -space-x-3">
+                      {project.projectDetails?.team.map((item) => (
+                        <Avatar className="w-10 h-10 border-2 border-slate-700 hover:border-blue-500 transition-colors" key={item.id}>
+                          <AvatarFallback className="bg-slate-700 text-white">
+                            {item.fullName[0]}
+                          </AvatarFallback>
+                        </Avatar>
+                      ))}
+                    </div>
+                    
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <button className="flex items-center gap-2 px-3 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-white text-sm font-medium transition-colors">
+                          <PlusIcon className="w-4 h-4" />
+                          Invite
+                        </button>
+                      </DialogTrigger>
+                      <DialogContent className="bg-slate-800 border-slate-700">
+                        <DialogHeader className="text-white">Invite User</DialogHeader>
+                        <InviteUserForm/>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                </div>
+                
+                <div>
+                  <h3 className="text-sm font-semibold text-slate-400 mb-3 uppercase tracking-wider">Status</h3>
+                  <Badge className="bg-green-500/20 text-green-300 border border-green-500/30 hover:bg-green-500/30">
+                    Active
+                  </Badge>
+                </div>
+              </div>
             </div>
-
+            
+            {/* Tasks Section */}
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-8">
+              <h2 className="text-2xl font-bold text-white mb-8">Tasks</h2>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <IssueList status="pending" title="To Do"/>
+                <IssueList status="in_progress" title="In Progress"/>
+                <IssueList status="done" title="Completed"/>
+              </div>
+            </div>
+          </main>
+          
+          {/* Sidebar */}
+          <aside className="lg:w-96 mt-8 lg:mt-0">
+            <div className="sticky top-8">
+              <ChatBox/>
+            </div>
+          </aside>
         </div>
-
+      </div>
     </div>
-      
-    </>
   )
 }
 

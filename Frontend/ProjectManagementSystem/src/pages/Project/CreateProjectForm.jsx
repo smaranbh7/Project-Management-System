@@ -4,155 +4,229 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "../../components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select"
 import { Input } from "../../components/ui/input";
 import { DialogClose } from "../../components/ui/dialog";
 import { Button } from "../../components/ui/button";
+import { Textarea } from "../../components/ui/textarea";
 import { tags } from "../ProjectList/ProjectList";
-import { Cross1Icon } from "@radix-ui/react-icons";
+import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { createProject } from "../../redux/Project/Action"
 
 function CreateProjectForm() {
   const dispatch = useDispatch();
   const { project } = useSelector(store => store);
+  const [isLoading, setIsLoading] = useState(false);
+  const closeButtonRef = useRef(null);
   
- 
   useEffect(() => {
-    return () => {
-      if (project.error) {
-    
+    // Handle success - close dialog and reset form
+    if (!project.loading && !project.error && isLoading) {
+      setIsLoading(false);
+      form.reset();
+      // Close the dialog
+      if (closeButtonRef.current) {
+        closeButtonRef.current.click();
       }
-    };
-  }, []);
-  const handleTagsChange =(newValue)=>{
+    }
+    
+    // Handle error - stop loading
+    if (project.error && isLoading) {
+      setIsLoading(false);
+    }
+  }, [project.loading, project.error, isLoading]);
+
+  const handleTagsChange = (newValue) => {
     const currentTags = form.getValues("tags");
-    const updatedTags= currentTags.includes(newValue)?
-    currentTags.filter(tag=>tag!==newValue):[...currentTags, newValue];
+    const updatedTags = currentTags.includes(newValue)
+      ? currentTags.filter(tag => tag !== newValue)
+      : [...currentTags, newValue];
     form.setValue("tags", updatedTags);
   }
+
   const form = useForm({
     defaultValues: {
       name: "",
       description: "",
       category: "",
-      tags: ["javascript", "react"],
+      tags: [],
     },
   });
-  const onSubmit = (data) => {
-    dispatch(createProject(data))
-    console.log("Create project data", data);
+
+  const onSubmit = async (data) => {
+    setIsLoading(true);
+    dispatch(createProject(data));
   };
+
   return (
-    <div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="text-center pb-2">
+        <h2 className="text-2xl font-bold text-white mb-2">Create New Project</h2>
+        <p className="text-slate-400 text-sm">Set up your project details and start collaborating</p>
+      </div>
+
       <Form {...form}>
         <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
+          {/* Project Name */}
           <FormField
             control={form.control}
             name="name"
+            rules={{ required: "Project name is required" }}
             render={({ field }) => (
               <FormItem>
+                <FormLabel className="text-sm font-medium text-slate-300">Project Name</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    type="text"
-                    className="border w-full border-gray-700 py-5 px-5"
-                    placeholder="Project Name"
+                    placeholder="Enter project name..."
+                    className="bg-white/5 border-white/20 text-white placeholder:text-slate-400 focus:border-blue-500/50 focus:ring-blue-500/20 h-11"
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-400 text-xs" />
               </FormItem>
             )}
           />
+
+          {/* Project Description */}
           <FormField
             control={form.control}
             name="description"
+            rules={{ required: "Project description is required" }}
             render={({ field }) => (
               <FormItem>
+                <FormLabel className="text-sm font-medium text-slate-300">Description</FormLabel>
                 <FormControl>
-                  <Input
+                  <Textarea
                     {...field}
-                    type="text"
-                    className="border w-full border-gray-700 py-5 px-5"
-                    placeholder="Project Description"
+                    placeholder="Describe your project..."
+                    className="bg-white/5 border-white/20 text-white placeholder:text-slate-400 focus:border-blue-500/50 focus:ring-blue-500/20 min-h-[90px] resize-none"
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-400 text-xs" />
               </FormItem>
             )}
           />
-            <FormField
+
+          {/* Category */}
+          <FormField
             control={form.control}
             name="category"
+            rules={{ required: "Please select a category" }}
             render={({ field }) => (
               <FormItem>
+                <FormLabel className="text-sm font-medium text-slate-300">Category</FormLabel>
                 <FormControl>
-                  <Select defaultValue="fullstack"
-                    value={field.value}
-                    onValueChange={(value)=>{
-                        field.onChange(value)
-                    }}
-                  >
-                  <SelectTrigger className= "w-full">
-                    <SelectValue placeholder="Category"/>
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="fullstack">FullStack</SelectItem>
-                    <SelectItem value="backend">Backend</SelectItem>
-                    <SelectItem value="frontend">Frontend</SelectItem>
-                  </SelectContent>
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger className="bg-white/5 border-white/20 text-white h-11">
+                      <SelectValue placeholder="Select project category" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-slate-800 border-slate-700">
+                      <SelectItem value="fullstack" className="text-slate-200 hover:bg-slate-700 focus:bg-slate-700">
+                        Full Stack
+                      </SelectItem>
+                      <SelectItem value="frontend" className="text-slate-200 hover:bg-slate-700 focus:bg-slate-700">
+                        Frontend
+                      </SelectItem>
+                      <SelectItem value="backend" className="text-slate-200 hover:bg-slate-700 focus:bg-slate-700">
+                        Backend
+                      </SelectItem>
+                    </SelectContent>
                   </Select>
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-400 text-xs" />
               </FormItem>
             )}
           />
-           <FormField
+
+          {/* Tags */}
+          <FormField
             control={form.control}
             name="tags"
             render={({ field }) => (
               <FormItem>
+                <FormLabel className="text-sm font-medium text-slate-300">Technologies</FormLabel>
                 <FormControl>
-                  <Select
-                    onValueChange={(value)=>{
-                        handleTagsChange(value)
-                    }}
-                  >
-                  <SelectTrigger className= "w-full">
-                    <SelectValue placeholder="Tags"/>
-                  </SelectTrigger>
-                  <SelectContent>
-                    {tags.map((item)=>(
-                        <SelectItem key={item} value={item}>
-                            {item}
-                    </SelectItem>
-                    ))}
-                    
-                  </SelectContent>
+                  <Select onValueChange={handleTagsChange}>
+                    <SelectTrigger className="bg-white/5 border-white/20 text-white h-11">
+                      <SelectValue placeholder="Add technologies..." />
+                    </SelectTrigger>
+                    <SelectContent className="bg-slate-800 border-slate-700">
+                      {tags.filter(tag => tag !== "all").map((item) => (
+                        <SelectItem 
+                          key={item} 
+                          value={item}
+                          className="text-slate-200 hover:bg-slate-700 focus:bg-slate-700 capitalize"
+                        >
+                          {item}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
                   </Select>
                 </FormControl>
-                <div className="flex gap-1 flex-wrap">
-                    {field.value.map((item)=><div key={item} onClick={()=>handleTagsChange(item)} className="cursor-pointer flex rounded-full
-                    items-center border gap-2 px-4 py-1"> 
-                        <span className="text-sm">{item}</span>
-                        <Cross1Icon className="h-3 w-3"/>
-                    </div>)}
-                </div>
-                <FormMessage />
+
+                {/* Selected Tags */}
+                {field.value.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {field.value.map((item) => (
+                      <div 
+                        key={item} 
+                        onClick={() => handleTagsChange(item)}
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded-md cursor-pointer hover:bg-blue-500/30 transition-colors text-xs"
+                      > 
+                        <span className="capitalize">{item}</span>
+                        <Cross1Icon className="w-3 h-3" />
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <FormMessage className="text-red-400 text-xs" />
               </FormItem>
             )}
           />
+
+          {/* Error Message */}
           {project.error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-              <p>{project.error}</p>
+            <div className="bg-red-500/20 border border-red-500/30 text-red-300 px-3 py-2 rounded-lg">
+              <p className="text-xs">{project.error}</p>
             </div>
           )}
-          <DialogClose>
-            <Button type="submit" className="w-full mt-5">Create Project</Button>
-          </DialogClose>
+
+          {/* Submit Button */}
+          <div className="flex gap-3 pt-4">
+            <DialogClose asChild>
+              <Button 
+                ref={closeButtonRef}
+                type="button" 
+                variant="outline"
+                className="flex-1 bg-white/5 border-white/20 text-slate-300 hover:bg-white/10 hover:text-white"
+              >
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button 
+              type="submit" 
+              disabled={isLoading}
+              className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 disabled:opacity-50 text-white font-medium"
+            >
+              {isLoading ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  Creating...
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <PlusIcon className="w-4 h-4" />
+                  Create Project
+                </div>
+              )}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
