@@ -1,7 +1,7 @@
 import api from '../../config/api';
 import {
     ACCEPT_INVITATION_REQUEST, ACCEPT_INVITATION_SUCCESS,
-    CREATE_PROJECT_REQUEST, CREATE_PROJECT_SUCCESS,
+    CREATE_PROJECT_REQUEST, CREATE_PROJECT_SUCCESS, CREATE_PROJECT_FAILURE,
     DELETE_PROJECT_REQUEST, DELETE_PROJECT_SUCCESS,
     FETCH_PROJECT_BY_ID_REQUEST, FETCH_PROJECT_BY_ID_SUCCESS,
     FETCH_PROJECTS_REQUEST, FETCH_PROJECTS_SUCCESS,
@@ -37,7 +37,9 @@ export const createProject=(projectData)=>async(dispatch) =>{
         console.log("Projects:", data);
         dispatch({ type: CREATE_PROJECT_SUCCESS, project: data });
     } catch (error) {
-        console.error("Error fetching projects:", error);
+        console.error("Error creating project:", error);
+        const errorMessage = error.response?.data?.message || error.message || "Failed to create project";
+        dispatch({ type: CREATE_PROJECT_FAILURE, error: errorMessage });
     }
 }
 

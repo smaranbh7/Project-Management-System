@@ -12,11 +12,22 @@ import { DialogClose } from "../../components/ui/dialog";
 import { Button } from "../../components/ui/button";
 import { tags } from "../ProjectList/ProjectList";
 import { Cross1Icon } from "@radix-ui/react-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import { createProject } from "../../redux/Project/Action"
 
 function CreateProjectForm() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const { project } = useSelector(store => store);
+  
+ 
+  useEffect(() => {
+    return () => {
+      if (project.error) {
+    
+      }
+    };
+  }, []);
   const handleTagsChange =(newValue)=>{
     const currentTags = form.getValues("tags");
     const updatedTags= currentTags.includes(newValue)?
@@ -134,17 +145,13 @@ function CreateProjectForm() {
               </FormItem>
             )}
           />
+          {project.error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              <p>{project.error}</p>
+            </div>
+          )}
           <DialogClose>
-            {false ? (
-              <div>
-                <p>
-                  You can create only 3 projects with free plan. Please upgarde
-                  your plan to create more projects
-                </p>
-              </div>
-            ) : (
-              <Button type="submit" className="w-full mt-5">Create Project</Button>
-            )}
+            <Button type="submit" className="w-full mt-5">Create Project</Button>
           </DialogClose>
         </form>
       </Form>
