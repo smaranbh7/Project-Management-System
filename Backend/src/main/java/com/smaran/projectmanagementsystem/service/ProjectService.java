@@ -2,6 +2,7 @@ package com.smaran.projectmanagementsystem.service;
 
 import com.smaran.projectmanagementsystem.model.Chat;
 import com.smaran.projectmanagementsystem.model.Project;
+import com.smaran.projectmanagementsystem.model.ProjectStatus;
 import com.smaran.projectmanagementsystem.model.User;
 
 import java.util.List;
@@ -25,4 +26,6 @@ public interface ProjectService {
     Chat getChatByProjectId(Long projectId) throws Exception;
 
     List<Project> searchProject(String keyword, User user) throws Exception;
+
+    public Project updateProjectStatus(ProjectStatus newStatus, Long projectId) throws Exception;
 }

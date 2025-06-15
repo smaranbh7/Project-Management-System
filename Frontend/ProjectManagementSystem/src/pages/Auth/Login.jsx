@@ -13,12 +13,12 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+    const form = useForm({
+        defaultValues: {
+          email: "",
+          password: "",
+        },
+      });
 
   const onSubmit = async (data) => {
     setIsLoading(true);
@@ -37,7 +37,7 @@ function Login() {
         <p className="text-slate-400 text-sm">Sign in to your account</p>
       </div>
 
-      <Form {...form}>
+        <Form {...form}>
         <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
           {/* Email Field */}
           <FormField
@@ -82,8 +82,8 @@ function Login() {
                 <FormLabel className="text-sm font-medium text-slate-300">Password</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <Input
-                      {...field}
+                  <Input
+                    {...field}
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
                       className="bg-white/5 border-white/20 text-white placeholder:text-slate-400 focus:border-blue-500/50 focus:ring-blue-500/20 h-11 pr-10"
@@ -127,7 +127,7 @@ function Login() {
             ) : (
               "Sign In"
             )}
-          </Button>
+                </Button>
 
           {/* Forgot Password */}
           <div className="text-center">

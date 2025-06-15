@@ -6,7 +6,8 @@ import {
     FETCH_PROJECT_BY_ID_REQUEST, FETCH_PROJECT_BY_ID_SUCCESS,
     FETCH_PROJECTS_REQUEST, FETCH_PROJECTS_SUCCESS,
     INVITE_TO_PROJECT_REQUEST, INVITE_TO_PROJECT_SUCCESS,
-    SEARCH_PROJECT_REQUEST, SEARCH_PROJECT_SUCCESS } from "./ActionTypes";
+    SEARCH_PROJECT_REQUEST, SEARCH_PROJECT_SUCCESS,
+    UPDATE_PROJECT_STATUS_REQUEST, UPDATE_PROJECT_STATUS_SUCCESS } from "./ActionTypes";
 
 export const fetchProjects=({category, tag})=>async(dispatch) =>{
     dispatch({ type: FETCH_PROJECTS_REQUEST }); 
@@ -88,5 +89,19 @@ export const acceptInvitation=({token, navigate})=>async(dispatch) =>{
         dispatch({ type: ACCEPT_INVITATION_SUCCESS, payload: data });
     } catch (error) {
         console.error("Error accepting invitation:", error);
+    }
+}
+export const updateProjectStatus=(projectId, status)=>async(dispatch) =>{
+    dispatch({ type: UPDATE_PROJECT_STATUS_REQUEST });
+    try {
+        console.log("API call: PUT /api/projects/"+projectId, { status });
+        const { data } = await api.put("/api/projects/"+projectId, { status });
+        console.log("Project status updated:", data);
+        dispatch({ type: UPDATE_PROJECT_STATUS_SUCCESS, project: data });
+        return data;
+    } catch (error) {
+        console.error("Error updating project status:", error);
+        console.error("Error details:", error.response?.data || error.message);
+        throw error;
     }
 }

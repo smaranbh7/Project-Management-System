@@ -58,12 +58,12 @@ function Navbar() {
               </div>
               {auth.user?.fullName?.split(' ')[0]}
             </button>
-          </DropdownMenuTrigger>
+            </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-40 bg-slate-800 border-slate-700">
             <DropdownMenuItem onClick={handleLogout} className="text-sm text-slate-200 hover:bg-slate-700 focus:bg-slate-700">
               Sign out
             </DropdownMenuItem>
-          </DropdownMenuContent>
+            </DropdownMenuContent>
         </DropdownMenu>
       </div>
     </div>

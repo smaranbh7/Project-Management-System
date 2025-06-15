@@ -13,22 +13,22 @@ function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
+    const form = useForm({
+        defaultValues: {
+          email: "",
+          password: "",
       fullName: ""
-    },
-  });
+        },
+      });
 
   const onSubmit = async (data) => {
     setIsLoading(true);
     try {
-      dispatch(register(data));
+        dispatch(register(data));
     } finally {
       setIsLoading(false);
     }
-  };
+      };
 
   return (
     <div className="space-y-6">
@@ -38,10 +38,10 @@ function Signup() {
         <p className="text-slate-400 text-sm">Join us to start managing your projects</p>
       </div>
 
-      <Form {...form}>
+        <Form {...form}>
         <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
           {/* Full Name Field */}
-          <FormField
+            <FormField
             control={form.control}
             name="fullName"
             rules={{ 
@@ -114,8 +114,8 @@ function Signup() {
                 <FormLabel className="text-sm font-medium text-slate-300">Password</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <Input
-                      {...field}
+                  <Input
+                    {...field}
                       type={showPassword ? "text" : "password"}
                       placeholder="Create a strong password"
                       className="bg-white/5 border-white/20 text-white placeholder:text-slate-400 focus:border-blue-500/50 focus:ring-blue-500/20 h-11 pr-10"
@@ -162,7 +162,7 @@ function Signup() {
             ) : (
               "Create Account"
             )}
-          </Button>
+                </Button>
 
           {/* Terms */}
           <div className="text-center">

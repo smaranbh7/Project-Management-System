@@ -25,15 +25,15 @@ function IssueCard({item, projectId}) {
           className="text-white font-medium cursor-pointer hover:text-blue-400 transition-colors line-clamp-2 flex-1 mr-2" 
           onClick={()=>navigate(`/project/${projectId}/issue/${item.id}`)}
         >
-          {item.title}
+                  {item.title}
         </h4>
         
-        <DropdownMenu>
+              <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="opacity-0 group-hover:opacity-100 p-1.5 hover:bg-white/10 rounded transition-all duration-200">
               <DotsVerticalIcon className="w-4 h-4 text-slate-400 hover:text-white" />
             </button>
-          </DropdownMenuTrigger>
+                  </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="bg-slate-800 border-slate-700">
             <DropdownMenuItem 
               onClick={handleIssueDelete}
@@ -41,12 +41,12 @@ function IssueCard({item, projectId}) {
             >
               Delete
             </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+                  </DropdownMenuContent>
+              </DropdownMenu>
+          </div>
       
       {/* Footer */}
-      <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between">
         <span className="text-xs text-slate-400 font-mono">
           #{item.id}
         </span>
@@ -62,13 +62,13 @@ function IssueCard({item, projectId}) {
                 <PersonIcon className="w-3 h-3 text-slate-400" />
               )}
             </button>
-          </DropdownMenuTrigger>
+                </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-slate-800 border-slate-700">
-            <UserList issueDetails={item}/>
-          </DropdownMenuContent>
-        </DropdownMenu>
+                    <UserList issueDetails={item}/>
+                  </DropdownMenuContent>
+            </DropdownMenu>
       </div>
-    </div>
+        </div>
   )
 }
 

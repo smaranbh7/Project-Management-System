@@ -62,7 +62,7 @@ function ChatBox() {
         <p className="text-sm text-slate-400">
           {chat.messages?.length || 0} messages
         </p>
-      </div>
+                </div>
       
       {/* Messages */}
       <ScrollArea className="h-[400px] p-4">
@@ -70,8 +70,8 @@ function ChatBox() {
           {chat.messages?.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-slate-400 text-sm">No messages yet. Start the conversation!</p>
-            </div>
-          ) : (
+              </div>
+            ) : (
             chat.messages?.map((item, index) =>
               item.sender.id !== auth.user.id ? (
                 <div className="flex gap-3" key={`message-${index}`}>
@@ -95,13 +95,13 @@ function ChatBox() {
                     <AvatarFallback className="bg-blue-600 text-white text-xs">
                       {item.sender.fullName[0]}
                     </AvatarFallback>
-                  </Avatar>
-                </div>
+                </Avatar>
+              </div>
               )
             )
           )}
         </div>
-      </ScrollArea>
+        </ScrollArea>
       
       {/* Message Input */}
       <div className="p-4 border-t border-white/10">
@@ -112,7 +112,7 @@ function ChatBox() {
             value={message} 
             onChange={handleMessageChange}
             onKeyPress={handleKeyPress}
-          />
+            />
           <button 
             onClick={handleSendMessage}
             disabled={!message.trim()}

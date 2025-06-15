@@ -8,7 +8,7 @@ import { ScrollArea } from "../../components/ui/scroll-area";
 import { RadioGroup, RadioGroupItem } from "../../components/ui/radio-group";
 import { Label } from "../../components/ui/label";
 import { Input } from "../../components/ui/input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProjectCard from "../Project/ProjectCard";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects, searchProjects } from "../../redux/Project/Action";
@@ -28,6 +28,13 @@ function ProjectList() {
   const [keyword, setKeyword] = useState("");
   const { project } = useSelector(store=>store)
   const dispatch = useDispatch()
+
+  // Fetch projects when component mounts (including when navigating back)
+  useEffect(() => {
+    console.log("ProjectList mounted - fetching fresh projects");
+    dispatch(fetchProjects({}));
+  }, [dispatch]);
+
   const handleFilterCategory = (value) => {
     if(value=="all"){
       dispatch(fetchProjects({}))
@@ -59,17 +66,17 @@ function ProjectList() {
           <div className="flex items-center gap-4 mb-4">
             <MixerHorizontalIcon className="w-5 h-5 text-white" />
             <h2 className="text-lg font-semibold text-white">Filters</h2>
-          </div>
-          
+            </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Category Filter */}
-            <div>
+                <div>
               <h3 className="text-sm font-medium text-slate-300 mb-3">Category</h3>
-              <RadioGroup
+                    <RadioGroup
                 className="flex flex-wrap gap-2"
-                defaultValue="all"
+                      defaultValue="all"
                 onValueChange={(value) => handleFilterCategory(value)}
-              >
+                    >
                 {[
                   { value: "all", label: "All" },
                   { value: "fullstack", label: "Full Stack" },
@@ -86,17 +93,17 @@ function ProjectList() {
                   </div>
                 ))}
               </RadioGroup>
-            </div>
+                </div>
 
             {/* Technology Filter */}
             <div>
               <h3 className="text-sm font-medium text-slate-300 mb-3">Technology</h3>
-              <RadioGroup
+                    <RadioGroup
                 className="flex flex-wrap gap-2"
-                defaultValue="all"
+                      defaultValue="all"
                 onValueChange={(value) => handleFilterTags(value)}
-              >
-                {tags.map((item) => (
+                    >
+                      {tags.map((item) => (
                   <div key={item} className="flex items-center gap-2 bg-white/5 hover:bg-white/10 px-3 py-2 rounded-lg border border-white/10 transition-colors">
                     <RadioGroupItem 
                       value={item} 
@@ -104,11 +111,11 @@ function ProjectList() {
                       className="border-white/50 text-blue-400 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500" 
                     />
                     <Label htmlFor={`tech-${item}`} className="text-white cursor-pointer text-sm capitalize">{item}</Label>
+                        </div>
+                      ))}
+                    </RadioGroup>
                   </div>
-                ))}
-              </RadioGroup>
-            </div>
-          </div>
+                </div>
         </div>
 
         {/* Main Content */}
@@ -162,11 +169,11 @@ function ProjectList() {
                     </div>
                   </div>
                }
-             </div>
-           </div>
-         </div>
-       </div>
-   );
- }
+            </div>
+          </div>
+          </div>
+      </div>
+  );
+}
 
 export default ProjectList;

@@ -22,6 +22,9 @@ public class Project {
     private String description;
     private String category;
 
+    @Enumerated(EnumType.STRING)
+    private ProjectStatus status;
+
 
     private List<String> tags = new ArrayList<>();
 

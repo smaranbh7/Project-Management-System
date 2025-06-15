@@ -22,14 +22,13 @@ function CreateProjectForm() {
   const dispatch = useDispatch();
   const { project } = useSelector(store => store);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectValue, setSelectValue] = useState("");
   const closeButtonRef = useRef(null);
   
   useEffect(() => {
-    // Handle success - close dialog and reset form
     if (!project.loading && !project.error && isLoading) {
       setIsLoading(false);
       form.reset();
-      // Close the dialog
       if (closeButtonRef.current) {
         closeButtonRef.current.click();
       }
@@ -47,6 +46,9 @@ function CreateProjectForm() {
       ? currentTags.filter(tag => tag !== newValue)
       : [...currentTags, newValue];
     form.setValue("tags", updatedTags);
+    
+    // Reset the select value to show placeholder again
+    setSelectValue("");
   }
 
   const form = useForm({
@@ -150,22 +152,34 @@ function CreateProjectForm() {
             name="tags"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-sm font-medium text-slate-300">Technologies</FormLabel>
+                <FormLabel className="text-sm font-medium text-slate-300">
+                  Technologies 
+                  {field.value.length > 0 && (
+                    <span className="text-blue-400 ml-1">({field.value.length} selected)</span>
+                  )}
+                </FormLabel>
                 <FormControl>
-                  <Select onValueChange={handleTagsChange}>
+                  <Select value={selectValue} onValueChange={handleTagsChange}>
                     <SelectTrigger className="bg-white/5 border-white/20 text-white h-11">
                       <SelectValue placeholder="Add technologies..." />
                     </SelectTrigger>
                     <SelectContent className="bg-slate-800 border-slate-700">
-                      {tags.filter(tag => tag !== "all").map((item) => (
-                        <SelectItem 
-                          key={item} 
-                          value={item}
-                          className="text-slate-200 hover:bg-slate-700 focus:bg-slate-700 capitalize"
-                        >
-                          {item}
-                        </SelectItem>
-                      ))}
+                      {tags
+                        .filter(tag => tag !== "all" && !field.value.includes(tag))
+                        .map((item) => (
+                          <SelectItem 
+                            key={item} 
+                            value={item}
+                            className="text-slate-200 hover:bg-slate-700 focus:bg-slate-700 capitalize"
+                          >
+                            {item}
+                          </SelectItem>
+                        ))}
+                      {tags.filter(tag => tag !== "all" && !field.value.includes(tag)).length === 0 && (
+                        <div className="px-2 py-1.5 text-slate-400 text-sm">
+                          All technologies selected
+                        </div>
+                      )}
                     </SelectContent>
                   </Select>
                 </FormControl>

@@ -68,49 +68,49 @@ function Subscription() {
                 </div>
 
                 {/* Current Plan Badge */}
-                {currentPlan && (
+            {currentPlan && (
                     <div className="flex justify-center mb-12">
                         <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3">
                             <p className="text-slate-300">
                                 Current Plan: <span className="text-blue-400 font-semibold">{currentPlan}</span>
-                            </p>
+                    </p>
                         </div>
-                    </div>
-                )}
+                </div>
+            )}
 
                 {/* Pricing Cards */}
                 <div className="flex flex-col lg:flex-row justify-center items-center gap-8 max-w-7xl mx-auto">
-                    <SubscriptionCard 
-                        data={{
-                            planName: "Free",
-                            features: freePlan,
-                            planType: "FREE",
-                            price: 0,
+                <SubscriptionCard 
+                    data={{
+                        planName: "Free",
+                        features: freePlan,
+                        planType: "FREE",
+                        price: 0,
                             buttonName: "Get Started",
                             description: "Perfect for getting started"
-                        }}
-                    />
-                    <SubscriptionCard 
-                        data={{
+                    }}
+                />
+                <SubscriptionCard 
+                    data={{
                             planName: "Monthly Pro",
-                            features: paidPlan,
-                            planType: "MONTHLY",
-                            price: 8,
+                        features: paidPlan,
+                        planType: "MONTHLY",
+                        price: 8,
                             buttonName: "Upgrade Now",
                             description: "Best for small teams",
                             popular: true
-                        }}
-                    />
-                    <SubscriptionCard
-                        data={{
+                    }}
+                />
+                <SubscriptionCard
+                    data={{
                             planName: "Annual Pro",
-                            features: annualPlan,
-                            planType: "ANNUALLY",
-                            price: 67.20,
+                        features: annualPlan,
+                        planType: "ANNUALLY",
+                        price: 67.20,
                             buttonName: "Upgrade Now",
                             description: "Best value for growing teams"
-                        }}
-                    />
+                    }}
+                />
                 </div>
 
                 {/* Bottom CTA */}

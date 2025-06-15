@@ -28,7 +28,7 @@ function IssueList({title, status}) {
     <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 min-h-[500px] flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <div>
+    <div>
           <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
           <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${statusColors[status]}`}>
             {issue.issues.filter((issue=>issue.status==status)).length} issues
@@ -56,13 +56,13 @@ function IssueList({title, status}) {
             <PlusIcon className="w-4 h-4" />
             Add Issue
           </button>
-        </DialogTrigger>
+                    </DialogTrigger>
         <DialogContent className="bg-slate-800 border-slate-700">
-          <DialogHeader>
+                <DialogHeader>
             <DialogTitle className="text-white">Create New Issue</DialogTitle>
-          </DialogHeader>
-          <CreateIssueForm status={status}/>
-        </DialogContent>
+                </DialogHeader>
+                <CreateIssueForm status={status}/>
+            </DialogContent>
       </Dialog>
     </div>
   )

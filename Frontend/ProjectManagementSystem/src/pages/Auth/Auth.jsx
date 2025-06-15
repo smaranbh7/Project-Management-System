@@ -6,7 +6,7 @@ import { Button } from "../../components/ui/button"
 function Auth() {
     const [active, setActive] = useState(true)
     
-    return (
+  return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 relative overflow-hidden">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-50">
@@ -58,11 +58,11 @@ function Auth() {
                         <p className="text-slate-500 text-sm">
                             By continuing, you agree to our Terms of Service and Privacy Policy
                         </p>
-                    </div>
+                </div>
                 </div>
             </div>
-        </div>
-    )
+    </div>
+  )
 }
 
 export default Auth

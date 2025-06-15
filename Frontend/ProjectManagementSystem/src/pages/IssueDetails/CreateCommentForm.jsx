@@ -35,19 +35,19 @@ function CreateCommentForm({issueId}) {
                   <Avatar className="w-10 h-10 flex-shrink-0">
                     <AvatarFallback className="bg-slate-700 text-white text-sm">
                       {auth.user?.fullName?.[0] || 'U'}
-                    </AvatarFallback>
-                  </Avatar>
+                        </AvatarFallback>
+                    </Avatar>
                   
                   <div className="flex-1 space-y-3">
-                    <FormControl>
-                      <Input
-                        {...field}
+                <FormControl>
+                  <Input
+                    {...field}
                         placeholder="Write a comment..."
                         className="bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus:border-blue-500/50 focus:ring-blue-500/20"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                    
+                  />
+                </FormControl>
+                <FormMessage />
+
                     <div className="flex justify-end">
                       <button 
                         type="submit"

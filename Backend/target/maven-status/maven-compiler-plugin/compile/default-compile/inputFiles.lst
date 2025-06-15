@@ -1,57 +1,60 @@
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/DTO/IssueDTO.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/ProjectManagementSystemApplication.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/config/AppConfig.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/config/JwtConstant.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/config/JwtProvider.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/config/JwtTokenValidator.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/controller/AuthController.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/controller/CommentController.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/controller/IssueController.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/controller/MessageController.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/controller/PaymentController.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/controller/ProjectController.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/controller/SubscriptionController.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/model/Chat.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/model/Comment.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/model/Invitation.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/model/Issue.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/model/Message.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/model/PlanType.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/model/Project.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/model/Subscription.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/model/User.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/repo/ChatRepository.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/repo/CommentRepository.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/repo/InvitationRepository.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/repo/IssueRepository.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/repo/MessageRepository.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/repo/ProjectRepository.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/repo/SubscriptionRepository.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/repo/UserRepository.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/request/CreateCommentRequest.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/request/CreateMessageRequest.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/request/InviteRequest.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/request/IssueRequest.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/request/LoginRequest.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/response/AuthResponse.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/response/MessageResponse.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/response/PaymentLinkResponse.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/ChatService.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/ChatServiceImpl.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/CommentService.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/CommentServiceImpl.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/CustomUserDetailsImpl.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/EmailService.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/EmailServiceImpl.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/InvitationService.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/InvitationServiceImpl.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/IssueService.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/IssueServiceImpl.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/MessageService.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/MessageServiceImpl.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/ProjectService.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/ProjectServiceImpl.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/SubscriptionService.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/SubscriptionServiceImpl.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/UserService.java
-/Users/smar7n/Developer/Spring Boot/ProjectManagementSystem/src/main/java/com/smaran/projectmanagementsystem/service/UserServiceImpl.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/DTO/IssueDTO.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/DTO/ProjectStatusDTO.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/ProjectManagementSystemApplication.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/config/AppConfig.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/config/JwtConstant.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/config/JwtProvider.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/config/JwtTokenValidator.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/controller/AuthController.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/controller/CommentController.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/controller/IssueController.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/controller/MessageController.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/controller/PaymentController.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/controller/ProjectController.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/controller/SubscriptionController.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/controller/UserController.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/model/Chat.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/model/Comment.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/model/Invitation.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/model/Issue.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/model/Message.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/model/PlanType.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/model/Project.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/model/ProjectStatus.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/model/Subscription.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/model/User.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/repo/ChatRepository.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/repo/CommentRepository.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/repo/InvitationRepository.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/repo/IssueRepository.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/repo/MessageRepository.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/repo/ProjectRepository.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/repo/SubscriptionRepository.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/repo/UserRepository.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/request/CreateCommentRequest.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/request/CreateMessageRequest.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/request/InviteRequest.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/request/IssueRequest.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/request/LoginRequest.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/response/AuthResponse.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/response/MessageResponse.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/response/PaymentLinkResponse.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/ChatService.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/ChatServiceImpl.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/CommentService.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/CommentServiceImpl.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/CustomUserDetailsImpl.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/EmailService.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/EmailServiceImpl.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/InvitationService.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/InvitationServiceImpl.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/IssueService.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/IssueServiceImpl.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/MessageService.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/MessageServiceImpl.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/ProjectService.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/ProjectServiceImpl.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/SubscriptionService.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/SubscriptionServiceImpl.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/UserService.java
+/Users/smar7n/Developer/ProjectManagementSystem/Backend/src/main/java/com/smaran/projectmanagementsystem/service/UserServiceImpl.java

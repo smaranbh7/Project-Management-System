@@ -46,7 +46,7 @@ function UpgradeSuccess() {
                         <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center">
                             <CheckCircledIcon className="w-10 h-10 text-green-400" />
                         </div>
-                    </div>
+                </div>
 
                     {/* Success Message */}
                     <div className="text-center mb-8">

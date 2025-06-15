@@ -91,9 +91,9 @@ function SubscriptionCard({ data }) {
       </div>
 
       {/* CTA Button */}
-      <Button  
-        onClick={handleUpgrade} 
-        disabled={isButtonDisabled}
+        <Button  
+          onClick={handleUpgrade} 
+          disabled={isButtonDisabled}
         className={`w-full h-12 font-medium transition-all duration-200 ${
           isCurrentPlan 
             ? 'bg-slate-600 text-slate-300 cursor-not-allowed' 
@@ -101,25 +101,25 @@ function SubscriptionCard({ data }) {
             ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/25'
             : 'bg-white text-slate-900 hover:bg-white/90'
         }`}
-      >
+        >
         {isLoading && (
           <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin mr-2"></div>
         )}
-        {getButtonText()}
-      </Button>
+            {getButtonText()}
+        </Button>
 
       {/* Features List */}
       <div className="mt-8 space-y-4">
         <h4 className="text-white font-medium text-sm uppercase tracking-wide">What's included:</h4>
         <div className="space-y-3">
-          {data.features.map((item) => (
+           {data.features.map((item) => (
             <div key={item} className="flex items-start gap-3">
               <CheckCircledIcon className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
               <p className="text-slate-300 text-sm leading-relaxed">{item}</p>
-            </div>
-          ))}
+             </div>
+           ))}
         </div>
-      </div>
+        </div>
     </div>
   )
 }

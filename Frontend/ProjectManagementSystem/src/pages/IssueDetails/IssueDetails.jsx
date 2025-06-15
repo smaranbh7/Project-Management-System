@@ -48,8 +48,8 @@ function IssueDetails() {
               {/* Issue Header */}
               <div className="mb-8">
                 <h1 className="text-3xl font-bold text-white mb-4">
-                  {issue.issueDetails?.title}
-                </h1>
+              {issue.issueDetails?.title}
+            </h1>
                 <div className="flex items-center gap-4 mb-6">
                   <span className="text-sm text-slate-400 font-mono">#{issueId}</span>
                   <Badge className={`border ${getStatusColor(issue.issueDetails?.status)}`}>
@@ -60,9 +60,9 @@ function IssueDetails() {
                 <div className="mb-6">
                   <h3 className="text-sm font-semibold text-slate-400 mb-3 uppercase tracking-wider">Description</h3>
                   <p className="text-slate-300 leading-relaxed">
-                    {issue.issueDetails?.description}
-                  </p>
-                </div>
+                {issue.issueDetails?.description}
+              </p>
+            </div>
               </div>
 
               {/* Comments Section */}
@@ -95,13 +95,13 @@ function IssueDetails() {
                 <Select onValueChange={handleUpdateIssueStatus} defaultValue={issue.issueDetails?.status}>
                   <SelectTrigger className="bg-white/10 border-white/20 text-white">
                     <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
+            </SelectTrigger>
                   <SelectContent className="bg-slate-800 border-slate-700">
                     <SelectItem value="pending" className="text-slate-200 hover:bg-slate-700">Pending</SelectItem>
                     <SelectItem value="in_progress" className="text-slate-200 hover:bg-slate-700">In Progress</SelectItem>
                     <SelectItem value="done" className="text-slate-200 hover:bg-slate-700">Done</SelectItem>
-                  </SelectContent>
-                </Select>
+            </SelectContent>
+          </Select>
               </div>
 
               {/* Details */}
@@ -111,18 +111,18 @@ function IssueDetails() {
                   <div>
                     <p className="text-sm text-slate-400 mb-2">Assignee</p>
                     {issue.issueDetails?.assignee?.fullName ? (
-                      <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3">
                         <Avatar className="w-8 h-8">
                           <AvatarFallback className="bg-slate-700 text-white text-xs">
-                            {issue.issueDetails?.assignee?.fullName[0]}
-                          </AvatarFallback>
-                        </Avatar>
+                                    {issue.issueDetails?.assignee?.fullName[0]}
+                                </AvatarFallback>
+                            </Avatar>
                         <span className="text-white">{issue.issueDetails?.assignee?.fullName}</span>
-                      </div>
+                    </div>
                     ) : (
                       <span className="text-slate-400">Unassigned</span>
                     )}
-                  </div>
+                    </div>
                   
                   <div>
                     <p className="text-sm text-slate-400 mb-2">Status</p>
@@ -130,7 +130,7 @@ function IssueDetails() {
                       {issue.issueDetails?.status?.replace('_', ' ')}
                     </Badge>
                   </div>
-                  
+
                   <div>
                     <p className="text-sm text-slate-400 mb-2">Created</p>
                     <span className="text-white">Recently</span>
