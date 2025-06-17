@@ -4,14 +4,23 @@ import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/Auth/Action";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { EyeOpenIcon, EyeNoneIcon } from "@radix-ui/react-icons";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { auth } = useSelector(store => store);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Navigate to dashboard when user is successfully authenticated
+  useEffect(() => {
+    if (auth.user) {
+      navigate('/');
+    }
+  }, [auth.user, navigate]);
 
     const form = useForm({
         defaultValues: {
@@ -127,7 +136,7 @@ function Login() {
             ) : (
               "Sign In"
             )}
-                </Button>
+          </Button>
 
           {/* Forgot Password */}
           <div className="text-center">
