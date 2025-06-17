@@ -139,4 +139,12 @@ public class ProjectServiceImpl implements ProjectService{
         List<Project> projects= projectRepository.findByNameContainingAndTeamContains(keyword, user);
         return projects;
     }
+
+
+    public Project updateProjectStatus(ProjectStatus newStatus, Long projectId) throws Exception {
+        Project project = getProjectById(projectId);
+        project.setStatus(newStatus);
+        return projectRepository.save(project);
+    }
+
 }

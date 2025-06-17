@@ -1,5 +1,6 @@
 package com.smaran.projectmanagementsystem.controller;
 
+import com.smaran.projectmanagementsystem.DTO.ProjectStatusDTO;
 import com.smaran.projectmanagementsystem.model.Chat;
 import com.smaran.projectmanagementsystem.model.Invitation;
 import com.smaran.projectmanagementsystem.model.Project;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/projects")
+
 public class ProjectController {
     @Autowired
     private ProjectService projectService;
@@ -129,5 +131,17 @@ public class ProjectController {
         projectService.addUserToProject(invitation.getProjectId(), user.getId());
         return new ResponseEntity<>(invitation, HttpStatus.ACCEPTED);
     }
+
+    @PutMapping("/{projectId}")
+    public ResponseEntity<Project> updateProjectStatus(
+            @PathVariable Long projectId,
+            @RequestHeader("Authorization") String jwt,
+            @RequestBody ProjectStatusDTO statusDTO
+    ) throws Exception {
+        User user = userService.findUserProfileByJwt(jwt);
+        Project updatedProject = projectService.updateProjectStatus(statusDTO.getStatus(), projectId);
+        return new ResponseEntity<>(updatedProject, HttpStatus.OK);
+    }
+
 
 }

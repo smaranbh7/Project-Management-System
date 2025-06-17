@@ -40,9 +40,12 @@ public class AppConfig {
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration cfg = new CorsConfiguration();
                 cfg.setAllowedOrigins(Arrays.asList(
-                        "http://localhost:3000/",
-                        "http://localhost:5173/",
-                        "http://localhost:4200/"
+                        "http://localhost:3000",
+                        "http://localhost:5173",
+                        "http://localhost:4200"
+                        //AWS Link
+                        /* "http://18.226.4.208",
+                        "http://18.226.4.208:80" */
                 ));
 
                 cfg.setAllowedMethods(Collections.singletonList("*"));

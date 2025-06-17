@@ -22,6 +22,12 @@ public class PaymentController {
     @Value("${stripe.api.secret}")
     private String apiSecret;
 
+    @Value("${stripe.price.monthly}")
+    private String monthlyPriceId;
+
+    @Value("${stripe.price.annual}")
+    private String annualPriceId;
+
     @Autowired
     private UserService userService;
 
@@ -41,9 +47,9 @@ public class PaymentController {
             // Use the correct price ID for each plan
             String priceId;
             if (planType.equals(PlanType.ANNUALLY)) {
-                priceId = "price_1RZ23kB7as4bwNWXtx7Q6rzw"; // annual
+                priceId = annualPriceId;
             } else if (planType.equals(PlanType.MONTHLY)) {
-                priceId = "price_1RZ21eB7as4bwNWXwsIPEjx3"; // monthly
+                priceId = monthlyPriceId;
             } else {
                 throw new Exception("Invalid plan type: " + planType);
             }

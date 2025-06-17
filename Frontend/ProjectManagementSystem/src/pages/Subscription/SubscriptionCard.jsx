@@ -1,4 +1,4 @@
-import { CheckCircledIcon } from "@radix-ui/react-icons"
+import { CheckCircledIcon, StarIcon } from "@radix-ui/react-icons"
 import { Button } from "../../components/ui/button"
 import { createPayment } from "../../redux/Payment/Action";
 import { useState } from "react";
@@ -50,28 +50,75 @@ function SubscriptionCard({ data }) {
   const isButtonDisabled = isCurrentPlan || isLoading || (data.planType === "FREE" && currentPlan !== "FREE");
 
   return (
-    <div className="rounded-xl bg-[#1b1b1b] bg-opacity-20 shadow-[#14173b] shadow-2xl card p-5 space-y-5 w-[18rem]">
-        <p className="text-lg font-semibold">{data.planName}</p>
-        <p>
-            <span className="text-xl font-semibold">${data.price}/</span>
-            <span className="text-sm text-gray-400">{data.planType.toLowerCase()}</span>
-        </p>
-        {data.planType === "ANNUALLY" && <p className="text-green-500 text-sm">30% off</p>}
+    <div className={`relative rounded-2xl p-8 w-full max-w-sm transition-all duration-300 hover:scale-105 ${
+      data.popular 
+        ? 'bg-white/10 backdrop-blur-sm border-2 border-blue-500/50 shadow-2xl shadow-blue-500/20' 
+        : 'bg-white/5 backdrop-blur-sm border border-white/20 hover:bg-white/10'
+    }`}>
+      {/* Popular Badge */}
+      {data.popular && (
+        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+          <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-1 rounded-full text-sm font-medium flex items-center gap-1">
+            <StarIcon className="w-3 h-3" />
+            Most Popular
+          </div>
+        </div>
+      )}
 
+      {/* Plan Header */}
+      <div className="text-center mb-6">
+        <h3 className="text-2xl font-bold text-white mb-2">{data.planName}</h3>
+        {data.description && (
+          <p className="text-slate-400 text-sm">{data.description}</p>
+        )}
+      </div>
+
+      {/* Pricing */}
+      <div className="text-center mb-8">
+        <div className="flex items-baseline justify-center gap-1">
+          <span className="text-4xl font-bold text-white">${data.price}</span>
+          <span className="text-slate-400">
+            /{data.planType === "ANNUALLY" ? "year" : data.planType.toLowerCase()}
+          </span>
+        </div>
+        {data.planType === "ANNUALLY" && (
+          <div className="mt-2">
+            <span className="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm font-medium">
+              30% off
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* CTA Button */}
         <Button  
           onClick={handleUpgrade} 
           disabled={isButtonDisabled}
-          className={`w-full ${isCurrentPlan ? 'bg-gray-600 text-gray-300' : 'bg-white text-black hover:bg-white/90'}`}
+        className={`w-full h-12 font-medium transition-all duration-200 ${
+          isCurrentPlan 
+            ? 'bg-slate-600 text-slate-300 cursor-not-allowed' 
+            : data.popular
+            ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/25'
+            : 'bg-white text-slate-900 hover:bg-white/90'
+        }`}
         >
+        {isLoading && (
+          <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin mr-2"></div>
+        )}
             {getButtonText()}
         </Button>
-        <div className="space-y-2">
+
+      {/* Features List */}
+      <div className="mt-8 space-y-4">
+        <h4 className="text-white font-medium text-sm uppercase tracking-wide">What's included:</h4>
+        <div className="space-y-3">
            {data.features.map((item) => (
-             <div key={item} className="flex items-center gap-2">
-                <CheckCircledIcon className="h-4 w-4 text-green-500" />
-                <p className="text-sm">{item}</p>
+            <div key={item} className="flex items-start gap-3">
+              <CheckCircledIcon className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
+              <p className="text-slate-300 text-sm leading-relaxed">{item}</p>
              </div>
            ))}
+        </div>
         </div>
     </div>
   )
