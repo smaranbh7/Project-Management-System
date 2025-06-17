@@ -17,6 +17,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/Auth/Action";
 import { Flame } from "lucide-react";
+import { useEffect } from "react";
+import { getUserSubscription } from "../../redux/Subscription/Action";
 
 function Navbar() {
   const { subscription, auth } = useSelector((store) => store);
@@ -27,8 +29,14 @@ function Navbar() {
     dispatch(logout());
   };
 
+  useEffect(()=>{
+    if(auth?.user){
+      dispatch(getUserSubscription());
+    }
+  },[dispatch, auth?.user])
+
   const currentPlan = subscription?.userSubscription?.planType;
-  console.log(currentPlan);
+  
   return (
     <div className="h-14 border-b border-white/10 bg-slate-900/95 backdrop-blur-sm flex items-center justify-between px-6">
       <div className="flex items-center">
