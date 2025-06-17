@@ -71,7 +71,7 @@ public class PaymentController {
                                     .setType(PaymentLinkCreateParams.AfterCompletion.Type.REDIRECT)
                                     .setRedirect(
                                             PaymentLinkCreateParams.AfterCompletion.Redirect.builder()
-                                                    .setUrl("http://localhost:5173/upgrade_plan/success?planType=" + planType + "&userId=" + user.getId())
+                                                    .setUrl("http://ec2-18-226-4-208.us-east-2.compute.amazonaws.com/upgrade_plan/success?planType=" + planType + "&userId=" + user.getId())
                                                     .build()
                                     )
                                     .build()

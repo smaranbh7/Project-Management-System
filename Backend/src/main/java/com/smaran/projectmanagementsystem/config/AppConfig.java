@@ -40,9 +40,11 @@ public class AppConfig {
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration cfg = new CorsConfiguration();
                 cfg.setAllowedOrigins(Arrays.asList(
-                        "http://localhost:3000",
-                        "http://localhost:5173",
-                        "http://localhost:4200"
+                                        "http://localhost:3000",
+                "http://localhost:5173",
+                "http://localhost:4200",
+                "http://ec2-18-226-4-208.us-east-2.compute.amazonaws.com",
+                "http://ec2-18-226-4-208.us-east-2.compute.amazonaws.com:80"
                         //AWS Link
                         /* "http://18.226.4.208",
                         "http://18.226.4.208:80" */
