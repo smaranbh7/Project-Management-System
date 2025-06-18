@@ -6,6 +6,7 @@ import com.smaran.projectmanagementsystem.model.Invitation;
 import com.smaran.projectmanagementsystem.model.Project;
 import com.smaran.projectmanagementsystem.model.User;
 import com.smaran.projectmanagementsystem.request.InviteRequest;
+import com.smaran.projectmanagementsystem.request.UserDeleteRequest;
 import com.smaran.projectmanagementsystem.response.MessageResponse;
 import com.smaran.projectmanagementsystem.service.InvitationService;
 import com.smaran.projectmanagementsystem.service.ProjectService;
@@ -84,6 +85,31 @@ public class ProjectController {
         projectService.deleteProject(projectId, user);
         MessageResponse res = new MessageResponse("Project deleted successfully!");
         return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{projectId}/userDelete")
+    public ResponseEntity<Project> deleteUserFromProject(
+            @PathVariable Long projectId,
+            @RequestHeader("Authorization") String jwt,
+            @RequestBody UserDeleteRequest request
+            )throws Exception {
+        User user = userService.findUserProfileByJwt(jwt);
+        Project project = projectService.getProjectById(projectId);
+        
+        // Only project owner can remove users
+        if (!project.getOwner().getId().equals(user.getId())) {
+            throw new Exception("Only project owner can remove team members");
+        }
+        
+        // Prevent owner from removing themselves
+        if (request.getUserId().equals(user.getId())) {
+            throw new Exception("Project owner cannot remove themselves from the project");
+        }
+        
+        projectService.removeUserToProject(projectId, request.getUserId());
+        Project updatedProject = projectService.getProjectById(projectId);
+        return new ResponseEntity<>(updatedProject, HttpStatus.OK);
+
     }
 
     @GetMapping("/search")

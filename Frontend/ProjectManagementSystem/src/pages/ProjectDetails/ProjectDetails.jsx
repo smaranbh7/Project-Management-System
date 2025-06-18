@@ -1,11 +1,12 @@
-import { ScrollArea } from "../../components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "../../components/ui/avatar";
 import { Badge } from "../../components/ui/badge";
 import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "../../components/ui/dialog";
 import {
@@ -15,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../components/ui/select";
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, Trash2 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import InviteUserForm from "./InviteUserForm";
 import IssueList from "./IssueList";
@@ -23,11 +24,11 @@ import ChatBox from "./ChatBox";
 import { useEffect, useState } from "react";
 import {
   fetchProjectById,
+  removeUserFromProject,
   updateProjectStatus,
 } from "../../redux/Project/Action";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getUserSubscription } from "../../redux/Subscription/Action";
 import FreePlanChatDisplay from "./FreePlanChatDisplay";
 
 function ProjectDetails() {
@@ -53,6 +54,18 @@ function ProjectDetails() {
     }
   };
 
+
+  const handleDeleteUser = (userId) => {
+    try {
+       dispatch(removeUserFromProject(id, userId));
+      // Optionally show success message
+      console.log("User removed successfully");
+    } catch (error) {
+      console.error("Failed to remove user:", error);
+      alert("Failed to remove user from project. Please try again.");
+    }
+  }
+
   const getStatusBadge = (status) => {
     if (status === "ACTIVE") {
       return (
@@ -74,7 +87,7 @@ function ProjectDetails() {
     );
   };
 
-  console.log("--->" + subscription.userSubscription?.planType);
+
   const currentPlan = subscription.userSubscription?.planType;
 
   return (
@@ -125,14 +138,46 @@ function ProjectDetails() {
                   <div className="flex items-center gap-4">
                     <div className="flex -space-x-3">
                       {project.projectDetails?.team.map((item) => (
-                        <Avatar
-                          className="w-10 h-10 border-2 border-slate-700 hover:border-blue-500 transition-colors"
-                          key={item.id}
-                        >
-                          <AvatarFallback className="bg-slate-700 text-white">
-                            {item.fullName[0]}
-                          </AvatarFallback>
-                        </Avatar>
+                        <Dialog key={item.id}>
+                          <DialogTrigger asChild>
+                            <Avatar className="w-10 h-10 border-2 border-slate-700 hover:border-blue-500 transition-colors cursor-pointer">
+                              <AvatarFallback className="bg-slate-700 text-white">
+                                {item.fullName[0]}
+                              </AvatarFallback>
+                            </Avatar>
+                          </DialogTrigger>
+                          <DialogContent className="bg-slate-800 border-slate-700">
+                            <DialogHeader>
+                              <DialogTitle className="text-white">{item.fullName}</DialogTitle>
+                              <DialogDescription className="text-slate-400">
+                                Team member details and actions
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div className="space-y-4">
+                              <div className="flex items-center gap-3">
+                                <Avatar className="w-12 h-12">
+                                  <AvatarFallback className="bg-slate-700 text-white">
+                                    {item.fullName[0]}
+                                  </AvatarFallback>
+                                </Avatar>
+                                <div>
+                                  <p className="text-white font-medium">{item.fullName}</p>
+                                  <p className="text-slate-400 text-sm">{item.email}</p>
+                                </div>
+                              </div>
+                              <div className="pt-4 border-t border-slate-600">
+                                <Button
+                                  variant="destructive"
+                                  onClick={() => handleDeleteUser(item.id)}
+                                  className="w-full bg-red-600 hover:bg-red-700"
+                                >
+                                  <Trash2 className="w-4 h-4 mr-2" />
+                                  Remove from Project
+                                </Button>
+                              </div>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
                       ))}
                     </div>
 
@@ -212,11 +257,11 @@ function ProjectDetails() {
             </aside>
           ) : (
             <div>
-                <aside className="lg:w-96 mt-8 lg:mt-0">
-              <div className="sticky top-8">
-                <FreePlanChatDisplay />
-              </div>
-            </aside>
+              <aside className="lg:w-96 mt-8 lg:mt-0">
+                <div className="sticky top-8">
+                  <FreePlanChatDisplay />
+                </div>
+              </aside>
             </div>
           )}
         </div>
