@@ -79,5 +79,9 @@ ProjectManagementSystem/
 
 **Smaran Bhattarai** - [GitHub Profile](https://github.com/smaranbh7)
 
+## Screenshots
+![Screenshot 2025-06-18 at 1 50 04 PM](https://github.com/user-attachments/assets/a193093a-b78a-4b36-aeed-e93e203f19ce)
+
+
 
 ⭐ If you like this project, please give it a star on GitHub! 
