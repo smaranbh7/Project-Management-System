@@ -43,11 +43,6 @@ A modern project management platform that enables users to manage projects, coll
 - **Spring Boot Mail** - Invitation Email service integration
 - **Lombok** - Boilerplate code reduction
 
-### Development & Deployment
-- **Maven** - Dependency management and build tool
-- **AWS EC2** - Cloud hosting platform
-- **nginx** - Web server and reverse proxy
-- **SSL/TLS** - Secure HTTPS communication
 
 ## 📁 Project Structure
 
