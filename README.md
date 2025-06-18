@@ -1,4 +1,4 @@
-# 🚀 Project Management System
+#  Project Management System
 
 A modern project management platform that enables users to manage projects, collaborate effectively, track progress, manage tasks, and communicate in real-time. The application features a clean, responsive interface with robust backend architecture supporting multiple subscription tiers.
 
