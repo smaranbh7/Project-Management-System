@@ -80,6 +80,9 @@ ProjectManagementSystem/
 **Smaran Bhattarai** - [GitHub Profile](https://github.com/smaranbh7)
 
 ## Screenshots
+![Screenshot 2025-06-18 at 1 50 04 PM](https://github.com/user-attachments/assets/c5da0d2d-b480-4cba-b4e0-02cf30e81b98)
+![Screenshot 2025-06-18 at 1 49 13 PM](https://github.com/user-attachments/assets/93572692-ea2d-4244-b6f5-8c5a623454af)
+<img width="1445" alt="Screenshot 2025-06-18 at 1 49 34 PM" src="https://github.com/user-attachments/assets/ffac49ad-fbba-4258-b6e8-1d4d3669e925" />
 ![Screenshot 2025-06-18 at 1 50 04 PM](https://github.com/user-attachments/assets/a193093a-b78a-4b36-aeed-e93e203f19ce)
 
 
