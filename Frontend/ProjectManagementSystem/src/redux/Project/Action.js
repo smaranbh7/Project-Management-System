@@ -7,7 +7,9 @@ import {
     FETCH_PROJECTS_REQUEST, FETCH_PROJECTS_SUCCESS,
     INVITE_TO_PROJECT_REQUEST, INVITE_TO_PROJECT_SUCCESS,
     SEARCH_PROJECT_REQUEST, SEARCH_PROJECT_SUCCESS,
-    UPDATE_PROJECT_STATUS_REQUEST, UPDATE_PROJECT_STATUS_SUCCESS } from "./ActionTypes";
+    UPDATE_PROJECT_STATUS_REQUEST, UPDATE_PROJECT_STATUS_SUCCESS, 
+    REMOVE_USER_FROM_PROJECT_SUCCESS,
+    REMOVE_USER_FROM_PROJECT_REQUEST} from "./ActionTypes";
 
 export const fetchProjects=({category, tag})=>async(dispatch) =>{
     dispatch({ type: FETCH_PROJECTS_REQUEST }); 
@@ -66,6 +68,23 @@ export const deleteProject=(projectId)=>async(dispatch) =>{
     }
 }
 
+
+export const removeUserFromProject=(projectId, userId)=>async(dispatch) =>{
+    dispatch({ type: REMOVE_USER_FROM_PROJECT_REQUEST });
+    try {
+        const { data } = await api.delete("/api/projects/"+projectId+"/userDelete", {
+            data: { userId }
+        });
+        console.log("User removed from project:", data);
+        dispatch({ type: REMOVE_USER_FROM_PROJECT_SUCCESS, project: data });
+        return data;
+    } catch (error) {
+        console.error("Error removing user from project:", error);
+        console.error("Error details:", error.response?.data || error.message);
+        throw error;
+    }
+}    
+
 export const inviteToProject=({email, projectId})=>async(dispatch) =>{
     dispatch({ type: INVITE_TO_PROJECT_REQUEST });
     try {
@@ -94,7 +113,6 @@ export const acceptInvitation=({token, navigate})=>async(dispatch) =>{
 export const updateProjectStatus=(projectId, status)=>async(dispatch) =>{
     dispatch({ type: UPDATE_PROJECT_STATUS_REQUEST });
     try {
-        console.log("API call: PUT /api/projects/"+projectId, { status });
         const { data } = await api.put("/api/projects/"+projectId, { status });
         console.log("Project status updated:", data);
         dispatch({ type: UPDATE_PROJECT_STATUS_SUCCESS, project: data });
@@ -105,3 +123,4 @@ export const updateProjectStatus=(projectId, status)=>async(dispatch) =>{
         throw error;
     }
 }
+    
